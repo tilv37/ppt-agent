@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary": "#ffffff",
+              "secondary": "#565e74",
+              "surface-container-high": "#e6e8ea",
+              "surface-container-lowest": "#ffffff",
+              "inverse-on-surface": "#eff1f3",
+              "on-surface-variant": "#434655",
+              "surface-tint": "#0053db",
+              "tertiary-container": "#8343f4",
+              "on-error-container": "#93000a",
+              "error-container": "#ffdad6",
+              "primary": "#004ac6",
+              "surface-variant": "#e0e3e5",
+              "primary-fixed-dim": "#b4c5ff",
+              "on-secondary-fixed": "#131b2e",
+              "on-error": "#ffffff",
+              "on-secondary-container": "#5c647a",
+              "on-primary-fixed-variant": "#003ea8",
+              "error": "#ba1a1a",
+              "on-primary": "#ffffff",
+              "on-primary-fixed": "#00174b",
+              "on-primary-container": "#eeefff",
+              "on-tertiary-fixed": "#25005a",
+              "tertiary-fixed": "#eaddff",
+              "surface": "#f7f9fb",
+              "outline-variant": "#c3c6d7",
+              "surface-bright": "#f7f9fb",
+              "secondary-fixed": "#dae2fd",
+              "on-tertiary-fixed-variant": "#5a00c6",
+              "primary-container": "#2563eb",
+              "surface-dim": "#d8dadc",
+              "tertiary": "#6a1edb",
+              "surface-container-highest": "#e0e3e5",
+              "background": "#f7f9fb",
+              "on-secondary-fixed-variant": "#3f465c",
+              "outline": "#737686",
+              "secondary-container": "#dae2fd",
+              "surface-container-low": "#f2f4f6",
+              "secondary-fixed-dim": "#bec6e0",
+              "on-background": "#191c1e",
+              "inverse-primary": "#b4c5ff",
+              "on-surface": "#191c1e",
+              "tertiary-fixed-dim": "#d2bbff",
+              "primary-fixed": "#dbe1ff",
+              "on-secondary": "#ffffff",
+              "inverse-surface": "#2d3133",
+              "surface-container": "#eceef0",
+              "on-tertiary-container": "#f7edff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      h1, h2, h3 {
+        font-family: 'Manrope', sans-serif;
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl docked full-width top-0 sticky z-50 flex justify-between items-center w-full px-6 py-3">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white font-manrope">CognitiveCanvas</span>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-blue-600 dark:text-blue-400 font-bold border-b-2 border-blue-600 transition-colors" href="#">Projects</a>
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:text-blue-500 dark:hover:text-blue-300 transition-colors" href="#">Templates</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800/50 border-none rounded-xl text-sm focus:ring-2 focus:ring-primary w-64" placeholder="Search projects..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-500 hover:text-blue-500 transition-colors scale-95 active:scale-90">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:text-blue-500 transition-colors scale-95 active:scale-90">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-slate-200 overflow-hidden ml-2">
+<img alt="User Profile Avatar" class="h-full w-full object-cover" data-alt="professional headshot of a confident creative director in a neutral studio setting with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfnnA9MWmkicZjFcW7lEiJvSK6wCwPdc8ikBApx7rp6AmdcTPyyEw2QXC1clNIqFFXzjGlV-YVWWi7tytCCo7vDxjtVDObs0j9Jj5TCu2RN1xpPozLXEXlmWR5VJbWjiyDOPu7UKXS9ELoZezWbFdKeWY3es1BgblpbE6s9za6PTpLmLRfDEF9dIjlxlz2W4SdzrSpdNEBzFXRqz4Qcg7PWPEFFnbBGGIt6xH8UsLNeC3A-5pjnimL3AS-d2sOAp0ey3oS10CSLTE"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Dashboard Content -->
+<main class="flex-grow container mx-auto px-6 py-8">
+<header class="flex justify-between items-end mb-10">
+<div>
+<h1 class="text-3xl font-extrabold tracking-tight text-on-surface mb-2">My Projects</h1>
+<p class="text-on-surface-variant font-body text-sm">Organize and manage your intelligent presentation outlines.</p>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 scale-95 active:scale-90 transition-transform shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">add</span>
+                Create New
+            </button>
+</header>
+<!-- Bento Grid Project List -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Project Card 1 -->
+<div class="group bg-surface-container-lowest rounded-xl p-4 transition-all hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-on-surface/5">
+<div class="aspect-video rounded-lg overflow-hidden mb-4 bg-surface-container relative">
+<img alt="Q4 Quarterly Review" class="w-full h-full object-cover" data-alt="minimalist presentation slide showing a clean bar chart with blue and white accents on a neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTIqPs9NNndDOm0BbQNDKGFqr46DF3cDANCsuQMjFPqRg5M0O9XW7mRWfRL-GgybgYWR8xY_qPGMKRfOP3OaMwpXKRNmJmrJRkAfWyN-oZigdcN4Dv8Zo2HSsAbjdSwY1s-k8Ic4CIFqcsj5AfSpekBgbc-qRzWRDEhTzBFBE9X4RU8eLTt5Z7Z66WZ7ZtqRcTJMiSdikcItjahq07L0yReNVAO6kWulzLMMB5aVIRly06CBsAy48_lQhHiOJd6WxU22lQjC9C3lY"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+<span class="bg-white text-primary px-4 py-2 rounded-full font-bold text-sm">Open Project</span>
+</div>
+</div>
+<div class="space-y-2">
+<h3 class="text-lg font-bold text-on-surface">Q4 Quarterly Strategy</h3>
+<div class="flex justify-between items-center text-xs text-on-surface-variant font-label">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">calendar_today</span> Updated 2h ago</span>
+<span class="bg-surface-container-high px-2 py-1 rounded text-on-secondary-container">12 Slides</span>
+</div>
+</div>
+</div>
+<!-- Project Card 2 -->
+<div class="group bg-surface-container-lowest rounded-xl p-4 transition-all hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-on-surface/5">
+<div class="aspect-video rounded-lg overflow-hidden mb-4 bg-surface-container relative">
+<img alt="AI Product Pitch" class="w-full h-full object-cover" data-alt="high-end editorial slide design featuring bold manrope typography and a sleek technology-themed abstract graphic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD619UDaRqROB6GUKZ6w12eRQEvm129Y3PMoCl8yHYwlYBlRJzXiF0X43fhMBE-Qe8vYksSg__Dw_dqYE7kKwq33C4Q58m4nKkijzyMe_mNPotAGtHofpJp7JUWdDx6z_sgtx8uo61SMNGZ5bXYqdUMahHbPxw0L4WNcM8T7vtFCyyIUUun4lwxKCDzfOAvAnCfGk4XUO9WPdBAK7p8COSIaZfFluAEexOm6SkfTVd6THrA7OaoLT7QqS9vmGzXwCDdgnQapaUpLQs"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+<span class="bg-white text-primary px-4 py-2 rounded-full font-bold text-sm">Open Project</span>
+</div>
+</div>
+<div class="space-y-2">
+<h3 class="text-lg font-bold text-on-surface">Cognitive Assistant Pitch</h3>
+<div class="flex justify-between items-center text-xs text-on-surface-variant font-label">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">calendar_today</span> Updated 1d ago</span>
+<span class="bg-surface-container-high px-2 py-1 rounded text-on-secondary-container">8 Slides</span>
+</div>
+</div>
+</div>
+<!-- Project Card 3 -->
+<div class="group bg-surface-container-lowest rounded-xl p-4 transition-all hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-on-surface/5">
+<div class="aspect-video rounded-lg overflow-hidden mb-4 bg-surface-container relative">
+<img alt="Financial Forecast" class="w-full h-full object-cover" data-alt="professional dashboard preview with clean lines and intelligence blue highlight colors on a white canvas" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6wKAiLsq3Rfteq-f_mIQwgmgfm0f9WvGnCjV_wvC1pxgE2v8EbZ0m3a1Ex6PYp0Sspvf-B7bkP4FdvQXZi8WUfDh07ZaRHQAPik00GSM1bhwbclqvP_mVdECpvMb3Sor6RoKGJMz9rYeFAR2wq9w-elXI2IaOZFNlp1hq1BP_LYDvn3o2moMgnayeQR37-ZROKWseCtVpt78C02OqkLR7BYBvwupOTWGW_e53-xF_10bDJWxLbuib_S4zWiMnpCR8bwV9dLYFnOw"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+<span class="bg-white text-primary px-4 py-2 rounded-full font-bold text-sm">Open Project</span>
+</div>
+</div>
+<div class="space-y-2">
+<h3 class="text-lg font-bold text-on-surface">2025 Market Expansion</h3>
+<div class="flex justify-between items-center text-xs text-on-surface-variant font-label">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">calendar_today</span> Updated 3d ago</span>
+<span class="bg-surface-container-high px-2 py-1 rounded text-on-secondary-container">15 Slides</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 bg-on-background/20 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+<!-- Create Project Modal -->
+<div class="bg-surface-container-lowest w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+<div class="px-8 pt-8 pb-6">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h2 class="text-2xl font-extrabold text-on-surface tracking-tight">Create Project</h2>
+<p class="text-on-surface-variant text-sm mt-1">Define your canvas for intelligent slide generation.</p>
+</div>
+<button class="text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<form class="space-y-6">
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface" for="project-title">Project Title</label>
+<input class="w-full px-4 py-3 rounded-xl border-outline-variant bg-surface-container-low text-on-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" id="project-title" placeholder="e.g., Annual Sales Kickoff" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface" for="project-desc">Description <span class="text-outline font-normal">(Optional)</span></label>
+<textarea class="w-full px-4 py-3 rounded-xl border-outline-variant bg-surface-container-low text-on-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none resize-none" id="project-desc" placeholder="What is this presentation about?" rows="3"></textarea>
+</div>
+<div class="flex gap-3 pt-4">
+<button class="flex-1 py-3 px-4 rounded-xl text-on-surface font-semibold bg-surface-container-high hover:bg-surface-container-highest transition-colors" type="button">
+                            Cancel
+                        </button>
+<button class="flex-1 py-3 px-4 rounded-xl text-white font-semibold bg-gradient-to-br from-primary to-primary-container shadow-lg shadow-primary/20 scale-95 active:scale-90 transition-transform" type="submit">
+                            Generate Canvas
+                        </button>
+</div>
+</form>
+</div>
+<!-- AI Suggestion Bar in Modal -->
+<div class="bg-surface-container-low px-8 py-4 flex items-center gap-3 border-t border-outline-variant/10">
+<span class="material-symbols-outlined text-tertiary" data-weight="fill" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<p class="text-xs text-on-surface-variant">Our AI can draft an outline once the title is set.</p>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="bg-slate-50 dark:bg-slate-950 full-width py-6 mt-auto border-t border-slate-200 dark:border-slate-800/50">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-8">
+<span class="text-xs font-inter tracking-wide text-slate-400">© 2024 CognitiveCanvas AI. All rights reserved.</span>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a class="text-xs font-inter tracking-wide text-slate-500 hover:underline hover:text-slate-900 dark:hover:text-white transition-opacity opacity-80 hover:opacity-100" href="#">Support</a>
+<a class="text-xs font-inter tracking-wide text-slate-500 hover:underline hover:text-slate-900 dark:hover:text-white transition-opacity opacity-80 hover:opacity-100" href="#">Privacy</a>
+<a class="text-xs font-inter tracking-wide text-slate-500 hover:underline hover:text-slate-900 dark:hover:text-white transition-opacity opacity-80 hover:opacity-100" href="#">Terms</a>
+<a class="text-xs font-inter tracking-wide text-slate-500 hover:underline hover:text-slate-900 dark:hover:text-white transition-opacity opacity-80 hover:opacity-100" href="#">Documentation</a>
+</div>
+</div>
+</footer>
+</body></html>

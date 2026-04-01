@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  sessions    Session[]
+  projects    Project[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  description String?
+  status      String   @default("idle")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  presentations  Presentation[]
+  chatMessages   ChatMessage[]
+  agentTraces    AgentTrace[]
+}
+
+model Presentation {
+  id        String   @id @default(cuid())
+  projectId String
+  title     String   @default("Untitled Presentation")
+  slides    Slide[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Slide {
+  id            String   @id @default(cuid())
+  presentationId String
+  index         Int
+  templateId    String?
+  generatedSvg  String?
+  contentJson   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  presentation Presentation @relation(fields: [presentationId], references: [id], onDelete: Cascade)
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  projectId String
+  role      String
+  content   String
+  createdAt DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model AgentTrace {
+  id          String   @id @default(cuid())
+  projectId   String
+  agent       String
+  status      String
+  reasoning   String?
+  result      String?
+  createdAt   DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Template {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  category  String
+  svgContent String
+  schemaJson String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

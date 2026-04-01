@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Template Management | CognitiveCanvas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary": "#ffffff",
+              "secondary": "#565e74",
+              "surface-container-high": "#e6e8ea",
+              "surface-container-lowest": "#ffffff",
+              "inverse-on-surface": "#eff1f3",
+              "on-surface-variant": "#434655",
+              "surface-tint": "#0053db",
+              "tertiary-container": "#8343f4",
+              "on-error-container": "#93000a",
+              "error-container": "#ffdad6",
+              "primary": "#004ac6",
+              "surface-variant": "#e0e3e5",
+              "primary-fixed-dim": "#b4c5ff",
+              "on-secondary-fixed": "#131b2e",
+              "on-error": "#ffffff",
+              "on-secondary-container": "#5c647a",
+              "on-primary-fixed-variant": "#003ea8",
+              "error": "#ba1a1a",
+              "on-primary": "#ffffff",
+              "on-primary-fixed": "#00174b",
+              "on-primary-container": "#eeefff",
+              "on-tertiary-fixed": "#25005a",
+              "tertiary-fixed": "#eaddff",
+              "surface": "#f7f9fb",
+              "outline-variant": "#c3c6d7",
+              "surface-bright": "#f7f9fb",
+              "secondary-fixed": "#dae2fd",
+              "on-tertiary-fixed-variant": "#5a00c6",
+              "primary-container": "#2563eb",
+              "surface-dim": "#d8dadc",
+              "tertiary": "#6a1edb",
+              "surface-container-highest": "#e0e3e5",
+              "background": "#f7f9fb",
+              "on-secondary-fixed-variant": "#3f465c",
+              "outline": "#737686",
+              "secondary-container": "#dae2fd",
+              "surface-container-low": "#f2f4f6",
+              "secondary-fixed-dim": "#bec6e0",
+              "on-background": "#191c1e",
+              "inverse-primary": "#b4c5ff",
+              "on-surface": "#191c1e",
+              "tertiary-fixed-dim": "#d2bbff",
+              "primary-fixed": "#dbe1ff",
+              "on-secondary": "#ffffff",
+              "inverse-surface": "#2d3133",
+              "surface-container": "#eceef0",
+              "on-tertiary-container": "#f7edff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      body { font-family: 'Inter', sans-serif; }
+      .font-manrope { font-family: 'Manrope', sans-serif; }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-panel {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl docked full-width top-0 sticky z-50 flex justify-between items-center w-full px-6 py-3">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white font-manrope">CognitiveCanvas</span>
+<nav class="hidden md:flex gap-6">
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:text-blue-500 dark:hover:text-blue-300 transition-colors" href="#">Projects</a>
+<a class="text-blue-600 dark:text-blue-400 font-bold border-b-2 border-blue-600 transition-colors" href="#">Templates</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 bg-primary-container text-white rounded-xl text-sm font-semibold transition-transform scale-95 active:scale-90">
+<span class="material-symbols-outlined text-sm">add_photo_alternate</span>
+                Import from Screenshot
+            </button>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-500 hover:text-blue-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:text-blue-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-slate-200 overflow-hidden ml-2">
+<img alt="User Profile Avatar" data-alt="professional portrait of a creative director in a bright modern studio setting with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByrhWfyHusAMZFrptVS8kWRVWnlTnB56P0XhvBqaPh-OT8fsR9eL796sQZfSnbaqWkFZ-tpRWdVeaEWSIuG0mko5DUujzWOWoyczs7pMfu4AVQA7ZhFwJHQkAYTHWV0Mows4USPXtCbGUYk9MIYL_s268M3WH2266c5LNckLa4OtgAqK6OKvEuSmJB_StX05-UlvbgnSzmEKDfkqximRkwxk1-floKnnXYT3WLww3RTVuyuxF4p_hQkmiPByz6pcit_u6RRF-L0E0"/>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow flex overflow-hidden">
+<!-- Left: Category Filter (The Navigation Shell) -->
+<aside class="w-64 bg-surface-container-low p-6 flex flex-col gap-8">
+<div>
+<h3 class="text-xs font-bold uppercase tracking-widest text-outline mb-4 px-2">Slide Categories</h3>
+<ul class="space-y-1">
+<li>
+<button class="w-full flex items-center gap-3 px-3 py-2 text-primary font-semibold bg-blue-50/50 rounded-xl">
+<span class="material-symbols-outlined text-lg" data-icon="dashboard">dashboard</span>
+<span class="text-sm">All Templates</span>
+</button>
+</li>
+<li>
+<button class="w-full flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-xl">
+<span class="material-symbols-outlined text-lg" data-icon="front_loader">front_loader</span>
+<span class="text-sm">Cover</span>
+</button>
+</li>
+<li>
+<button class="w-full flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-xl">
+<span class="material-symbols-outlined text-lg" data-icon="format_list_bulleted">format_list_bulleted</span>
+<span class="text-sm">Agenda</span>
+</button>
+</li>
+<li>
+<button class="w-full flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-xl">
+<span class="material-symbols-outlined text-lg" data-icon="auto_stories">auto_stories</span>
+<span class="text-sm">Chapter</span>
+</button>
+</li>
+<li>
+<button class="w-full flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-xl">
+<span class="material-symbols-outlined text-lg" data-icon="bar_chart">bar_chart</span>
+<span class="text-sm">Data &amp; Charts</span>
+</button>
+</li>
+<li>
+<button class="w-full flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-xl">
+<span class="material-symbols-outlined text-lg" data-icon="account_tree">account_tree</span>
+<span class="text-sm">Flow &amp; Logic</span>
+</button>
+</li>
+</ul>
+</div>
+<div class="mt-auto">
+<div class="p-4 bg-tertiary-container/10 rounded-2xl border border-tertiary/10">
+<p class="text-xs font-manrope font-bold text-tertiary mb-2">AI ENGINE ACTIVE</p>
+<p class="text-[10px] text-on-surface-variant leading-relaxed">System learning from your custom screenshot imports to suggest layout variations.</p>
+</div>
+</div>
+</aside>
+<!-- Middle: Template Grid (The Canvas) -->
+<section class="flex-grow bg-surface p-8 overflow-y-auto">
+<div class="max-w-5xl mx-auto">
+<header class="flex justify-between items-end mb-8">
+<div>
+<h1 class="text-3xl font-manrope font-extrabold text-slate-900 tracking-tight">Editorial Master Kit</h1>
+<p class="text-on-surface-variant font-body mt-1">42 high-fidelity architectural skeletons</p>
+</div>
+<div class="flex bg-surface-container-high rounded-full p-1">
+<button class="px-4 py-1.5 bg-white shadow-sm rounded-full text-xs font-bold text-primary">Grid</button>
+<button class="px-4 py-1.5 text-xs font-bold text-outline">List</button>
+</div>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Template Card 1 (Active) -->
+<div class="group relative bg-surface-container-lowest rounded-2xl overflow-hidden ring-2 ring-primary transition-all duration-300">
+<div class="aspect-[16/10] bg-surface-container flex items-center justify-center p-4">
+<div class="w-full h-full border-2 border-dashed border-outline-variant rounded-lg flex flex-col gap-2 p-4">
+<div class="h-4 w-2/3 bg-surface-variant rounded"></div>
+<div class="flex gap-2 h-full">
+<div class="w-1/2 bg-surface-variant rounded opacity-50"></div>
+<div class="w-1/2 flex flex-col gap-2">
+<div class="h-2 w-full bg-surface-variant rounded"></div>
+<div class="h-2 w-full bg-surface-variant rounded"></div>
+<div class="h-2 w-4/5 bg-surface-variant rounded"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="text-sm font-bold text-slate-900">Executive Summary A</h4>
+<p class="text-[10px] text-outline mt-1 uppercase tracking-wider">Flow &amp; Logic</p>
+</div>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</div>
+<!-- Template Card 2 -->
+<div class="group bg-surface-container-lowest rounded-2xl overflow-hidden hover:translate-y-[-4px] transition-all duration-300">
+<div class="aspect-[16/10] bg-surface-container flex items-center justify-center p-4">
+<div class="w-full h-full border-2 border-dashed border-outline-variant rounded-lg flex flex-col gap-4 p-6">
+<div class="h-8 w-1/2 bg-surface-variant rounded self-center"></div>
+<div class="h-2 w-full bg-surface-variant rounded opacity-40"></div>
+<div class="h-2 w-2/3 bg-surface-variant rounded opacity-40 self-center"></div>
+</div>
+</div>
+<div class="p-4">
+<h4 class="text-sm font-bold text-slate-900 group-hover:text-primary transition-colors">Minimalist Chapter Break</h4>
+<p class="text-[10px] text-outline mt-1 uppercase tracking-wider">Chapter</p>
+</div>
+</div>
+<!-- Template Card 3 -->
+<div class="group bg-surface-container-lowest rounded-2xl overflow-hidden hover:translate-y-[-4px] transition-all duration-300">
+<div class="aspect-[16/10] bg-surface-container flex items-center justify-center p-4">
+<div class="w-full h-full border-2 border-dashed border-outline-variant rounded-lg flex flex-col gap-3 p-4">
+<div class="grid grid-cols-3 gap-2 h-2/3">
+<div class="bg-surface-variant rounded"></div>
+<div class="bg-surface-variant rounded"></div>
+<div class="bg-surface-variant rounded"></div>
+</div>
+<div class="h-3 w-1/3 bg-surface-variant rounded"></div>
+</div>
+</div>
+<div class="p-4">
+<h4 class="text-sm font-bold text-slate-900 group-hover:text-primary transition-colors">Triple Column Matrix</h4>
+<p class="text-[10px] text-outline mt-1 uppercase tracking-wider">Data &amp; Charts</p>
+</div>
+</div>
+<!-- Template Card 4 -->
+<div class="group bg-surface-container-lowest rounded-2xl overflow-hidden hover:translate-y-[-4px] transition-all duration-300">
+<div class="aspect-[16/10] bg-surface-container flex items-center justify-center p-4">
+<div class="w-full h-full border-2 border-dashed border-outline-variant rounded-lg flex gap-4 p-4">
+<div class="w-full bg-surface-variant rounded"></div>
+</div>
+</div>
+<div class="p-4">
+<h4 class="text-sm font-bold text-slate-900 group-hover:text-primary transition-colors">Hero Image Overlay</h4>
+<p class="text-[10px] text-outline mt-1 uppercase tracking-wider">Cover</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right: Detailed Panel -->
+<aside class="w-96 bg-surface-container-high border-l border-slate-200/10 p-6 flex flex-col gap-6 glass-panel">
+<header>
+<div class="flex justify-between items-start mb-2">
+<h2 class="text-xl font-manrope font-bold text-slate-900">Template Logic</h2>
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded-md">V 2.4</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">Optimized for executive read-outs. Enforces a 60/40 visual weight balance.</p>
+</header>
+<div class="space-y-6">
+<div>
+<h3 class="text-[10px] font-bold text-outline uppercase tracking-widest mb-4">Slot Schema</h3>
+<div class="space-y-3">
+<div class="flex items-center gap-3 p-3 bg-surface-container-lowest rounded-xl border-l-4 border-primary">
+<span class="material-symbols-outlined text-primary text-sm">title</span>
+<div>
+<p class="text-xs font-bold">slot-title</p>
+<p class="text-[10px] text-outline">Max 45 chars • H1 Manrope</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-lowest rounded-xl border-l-4 border-tertiary">
+<span class="material-symbols-outlined text-tertiary text-sm">format_list_bulleted</span>
+<div>
+<p class="text-xs font-bold">slot-bullets</p>
+<p class="text-[10px] text-outline">3-5 items • Body Inter</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-lowest rounded-xl border-l-4 border-secondary">
+<span class="material-symbols-outlined text-secondary text-sm">image</span>
+<div>
+<p class="text-xs font-bold">slot-image</p>
+<p class="text-[10px] text-outline">16:9 Aspect • Gradient Tint</p>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-[10px] font-bold text-outline uppercase tracking-widest mb-4">Spatial Constraints</h3>
+<div class="bg-surface-container p-4 rounded-xl space-y-3">
+<div class="flex justify-between items-center">
+<span class="text-[10px] text-on-surface-variant">Inner Padding</span>
+<span class="text-[10px] font-mono bg-white px-1.5 py-0.5 rounded">48px</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[10px] text-on-surface-variant">Inter-slot Gap</span>
+<span class="text-[10px] font-mono bg-white px-1.5 py-0.5 rounded">24px</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[10px] text-on-surface-variant">Responsive Pivot</span>
+<span class="text-[10px] font-mono bg-white px-1.5 py-0.5 rounded">Vertical @ &lt;768</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-auto space-y-3">
+<button class="w-full py-3 bg-primary text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-shadow">
+                    Apply Skeleton to Project
+                </button>
+<button class="w-full py-3 bg-transparent text-primary border border-primary/20 rounded-xl font-bold text-sm hover:bg-primary/5 transition-colors">
+                    Duplicate as Custom
+                </button>
+</div>
+</aside>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800/50 full-width py-6 mt-auto">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-8">
+<p class="text-xs font-inter tracking-wide text-slate-400">© 2024 CognitiveCanvas AI. All rights reserved.</p>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a class="text-xs font-inter tracking-wide text-slate-500 hover:underline" href="#">Support</a>
+<a class="text-xs font-inter tracking-wide text-slate-500 hover:underline" href="#">Privacy</a>
+<a class="text-xs font-inter tracking-wide text-slate-500 hover:underline" href="#">Terms</a>
+<a class="text-xs font-inter tracking-wide text-slate-500 hover:underline" href="#">Documentation</a>
+</div>
+</div>
+</footer>
+</body></html>

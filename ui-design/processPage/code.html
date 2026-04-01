@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-tertiary": "#ffffff",
+            "secondary": "#565e74",
+            "surface-container-high": "#e6e8ea",
+            "surface-container-lowest": "#ffffff",
+            "inverse-on-surface": "#eff1f3",
+            "on-surface-variant": "#434655",
+            "surface-tint": "#0053db",
+            "tertiary-container": "#8343f4",
+            "on-error-container": "#93000a",
+            "error-container": "#ffdad6",
+            "primary": "#004ac6",
+            "surface-variant": "#e0e3e5",
+            "primary-fixed-dim": "#b4c5ff",
+            "on-secondary-fixed": "#131b2e",
+            "on-error": "#ffffff",
+            "on-secondary-container": "#5c647a",
+            "on-primary-fixed-variant": "#003ea8",
+            "error": "#ba1a1a",
+            "on-primary": "#ffffff",
+            "on-primary-fixed": "#00174b",
+            "on-primary-container": "#eeefff",
+            "on-tertiary-fixed": "#25005a",
+            "tertiary-fixed": "#eaddff",
+            "surface": "#f7f9fb",
+            "outline-variant": "#c3c6d7",
+            "surface-bright": "#f7f9fb",
+            "secondary-fixed": "#dae2fd",
+            "on-tertiary-fixed-variant": "#5a00c6",
+            "primary-container": "#2563eb",
+            "surface-dim": "#d8dadc",
+            "tertiary": "#6a1edb",
+            "surface-container-highest": "#e0e3e5",
+            "background": "#f7f9fb",
+            "on-secondary-fixed-variant": "#3f465c",
+            "outline": "#737686",
+            "secondary-container": "#dae2fd",
+            "surface-container-low": "#f2f4f6",
+            "secondary-fixed-dim": "#bec6e0",
+            "on-background": "#191c1e",
+            "inverse-primary": "#b4c5ff",
+            "on-surface": "#191c1e",
+            "tertiary-fixed-dim": "#d2bbff",
+            "primary-fixed": "#dbe1ff",
+            "on-secondary": "#ffffff",
+            "inverse-surface": "#2d3133",
+            "surface-container": "#eceef0",
+            "on-tertiary-container": "#f7edff"
+          },
+          fontFamily: {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+        },
+      },
+    }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-manrope { font-family: 'Manrope', sans-serif; }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .pulse-glow {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.05); }
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+<!-- TopNavBar (Shared Component) -->
+<nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl docked full-width top-0 sticky z-50 flex justify-between items-center w-full px-6 py-3">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white font-manrope">CognitiveCanvas</span>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-blue-600 dark:text-blue-400 font-bold border-b-2 border-blue-600 font-medium" href="#">Projects</a>
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:text-blue-500 dark:hover:text-blue-300 transition-colors" href="#">Templates</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="bg-slate-50 dark:bg-slate-800/50 border-none rounded-full pl-10 pr-4 py-1.5 text-sm focus:ring-2 focus:ring-primary w-64" placeholder="Search projects..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-500 hover:text-blue-500 transition-colors hover:scale-95 active:scale-90"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-2 text-slate-500 hover:text-blue-500 transition-colors hover:scale-95 active:scale-90"><span class="material-symbols-outlined">settings</span></button>
+</div>
+<div class="h-8 w-8 rounded-full bg-slate-200 overflow-hidden">
+<img alt="User Profile Avatar" data-alt="close-up portrait of a professional woman in business attire with a confident smile and neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIyCKedLE9Bvdnclb5JfW1HHyv5ZXLBuzrEf818EvjAt8geSuyG-Oqj2_Oynf2x0m3pIDZIXeJz7ORUXb6-7Owpd_s9VvnnjI97CJZS-nxY4MP_cT9IQC0FYvtrV43_8LGCxjjJpxq9dA413-VaydbIKtDdL7w5s8O91-LKhlJBMjwPdQ23RpV4tdXCOepl5vM4Ek7aFSfyE8pq2kfbje7PUqj1VlJrLWz9bLlSnHo3LdRjTRrm2ezbgDB_x6I47vLdo9I9CQQI1U"/>
+</div>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded-full font-bold text-sm hover:scale-95 active:scale-90 transition-transform">Create New</button>
+</div>
+</nav>
+<main class="flex-grow flex flex-col px-6 py-8 gap-8 max-w-7xl mx-auto w-full">
+<!-- Status & Progress Section -->
+<section class="space-y-6">
+<div class="flex items-center justify-between">
+<div>
+<h1 class="text-3xl font-manrope font-extrabold tracking-tight text-on-surface mb-1">Orchestrating AI Agents...</h1>
+<p class="text-on-surface-variant text-sm font-medium">Multi-agent intelligence is synthesizing your presentation structure.</p>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-low px-4 py-2 rounded-full border border-outline-variant/15">
+<div class="w-3 h-3 bg-tertiary rounded-full pulse-glow"></div>
+<span class="text-xs font-bold text-tertiary uppercase tracking-widest">Active Agent: Analyst Prime</span>
+</div>
+</div>
+<!-- Multi-Agent Steps Timeline -->
+<div class="bg-surface-container-lowest p-8 rounded-full border border-outline-variant/15 flex items-center justify-between relative">
+<!-- Step 1: Finished -->
+<div class="flex flex-col items-center gap-3 relative z-10">
+<div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<span class="text-xs font-semibold text-on-surface-variant">Content Extraction</span>
+</div>
+<div class="h-1 flex-grow mx-4 bg-green-200"></div>
+<!-- Step 2: Current -->
+<div class="flex flex-col items-center gap-3 relative z-10">
+<div class="w-14 h-14 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container pulse-glow shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<span class="text-sm font-bold text-primary">Outline Planning</span>
+</div>
+<div class="h-1 flex-grow mx-4 bg-surface-container-high overflow-hidden">
+<div class="h-full bg-primary w-1/3 animate-[shimmer_2s_infinite]"></div>
+</div>
+<!-- Step 3: Pending -->
+<div class="flex flex-col items-center gap-3 relative z-10 opacity-40">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard_customize</span>
+</div>
+<span class="text-xs font-semibold text-on-surface-variant">Layout Selection</span>
+</div>
+<div class="h-1 flex-grow mx-4 bg-surface-container-high"></div>
+<!-- Step 4: Pending -->
+<div class="flex flex-col items-center gap-3 relative z-10 opacity-40">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">draw</span>
+</div>
+<span class="text-xs font-semibold text-on-surface-variant">Asset Generation</span>
+</div>
+</div>
+</section>
+<!-- Content Area: Asymmetric Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left side: Outline Review Table -->
+<div class="lg:col-span-8 bg-surface p-1 rounded-full overflow-hidden border border-outline-variant/15 shadow-sm">
+<div class="bg-surface-container-lowest rounded-full p-6">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-manrope font-bold text-on-surface">Slide Deck Outline</h2>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container-low rounded-xl transition-colors"><span class="material-symbols-outlined text-on-surface-variant">reorder</span></button>
+<button class="p-2 hover:bg-surface-container-low rounded-xl transition-colors"><span class="material-symbols-outlined text-on-surface-variant">add</span></button>
+</div>
+</div>
+<div class="overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-outline-variant/10">
+<th class="pb-4 px-4 w-12">#</th>
+<th class="pb-4 px-4">Slide Title</th>
+<th class="pb-4 px-4">Key Narrative Points</th>
+<th class="pb-4 px-4">Template</th>
+<th class="pb-4 px-4 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="group hover:bg-surface-container-low transition-colors">
+<td class="py-5 px-4 font-manrope font-bold text-slate-400">01</td>
+<td class="py-5 px-4">
+<input class="bg-transparent border-none p-0 focus:ring-0 font-bold text-on-surface w-full" type="text" value="Executive Summary: The Future of SaaS"/>
+</td>
+<td class="py-5 px-4">
+<ul class="text-sm text-on-surface-variant list-disc list-inside space-y-1">
+<li>Market growth projection</li>
+<li>Core value proposition</li>
+</ul>
+</td>
+<td class="py-5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-full">
+<span class="material-symbols-outlined text-[14px]">view_quilt</span> Minimal Hero
+                    </span>
+</td>
+<td class="py-5 px-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined">edit_note</span></button>
+</td>
+</tr>
+<tr class="group hover:bg-surface-container-low transition-colors">
+<td class="py-5 px-4 font-manrope font-bold text-slate-400">02</td>
+<td class="py-5 px-4">
+<input class="bg-transparent border-none p-0 focus:ring-0 font-bold text-on-surface w-full" type="text" value="Core Problem Space"/>
+</td>
+<td class="py-5 px-4">
+<ul class="text-sm text-on-surface-variant list-disc list-inside space-y-1">
+<li>Inefficient data silos</li>
+<li>High operational overhead</li>
+</ul>
+</td>
+<td class="py-5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-purple-50 text-purple-700 text-xs font-bold rounded-full">
+<span class="material-symbols-outlined text-[14px]">view_column</span> Split Contrast
+                    </span>
+</td>
+<td class="py-5 px-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined">edit_note</span></button>
+</td>
+</tr>
+<tr class="group hover:bg-surface-container-low transition-colors">
+<td class="py-5 px-4 font-manrope font-bold text-slate-400">03</td>
+<td class="py-5 px-4">
+<input class="bg-transparent border-none p-0 focus:ring-0 font-bold text-on-surface w-full" type="text" value="Introducing CogCanvas Solution"/>
+</td>
+<td class="py-5 px-4">
+<ul class="text-sm text-on-surface-variant list-disc list-inside space-y-1">
+<li>Agent-driven workflow</li>
+<li>Real-time rendering engine</li>
+</ul>
+</td>
+<td class="py-5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-700 text-xs font-bold rounded-full">
+<span class="material-symbols-outlined text-[14px]">gallery_thumbnail</span> Visual Showcase
+                    </span>
+</td>
+<td class="py-5 px-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined">edit_note</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right side: Sidebar Assistant Context -->
+<aside class="lg:col-span-4 flex flex-col gap-6">
+<div class="bg-slate-50 dark:bg-slate-800/50 backdrop-blur-2xl rounded-full p-6 border-l border-slate-200/10 shadow-2xl dark:shadow-none flex flex-col gap-4">
+<div class="flex items-center gap-3 mb-2">
+<div class="p-2 bg-blue-100 text-blue-700 rounded-xl">
+<span class="material-symbols-outlined">smart_toy</span>
+</div>
+<div>
+<h3 class="text-lg font-semibold font-manrope">Intelligence</h3>
+<p class="text-xs text-slate-500">Active Agent Feedback</p>
+</div>
+</div>
+<div class="bg-surface-container-highest border-l-2 border-tertiary p-4 rounded-r-xl">
+<p class="text-sm text-on-surface italic leading-relaxed">
+              "I've structured the narrative to follow a classic problem-solution-scale arc. I suggest keeping Slide 02's layout minimal to emphasize the pain points before the 'Big Reveal' on Slide 03."
+            </p>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Agent Confidence Score</label>
+<div class="flex items-center gap-3">
+<div class="flex-grow h-2 bg-slate-200 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-tertiary w-[94%]"></div>
+</div>
+<span class="text-xs font-bold text-primary">94%</span>
+</div>
+</div>
+<div class="pt-4 border-t border-slate-200/20">
+<button class="w-full py-3 bg-slate-200/50 hover:bg-slate-200 text-on-surface text-sm font-bold rounded-xl transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">history</span>
+              View Version History
+            </button>
+</div>
+</div>
+<!-- Call to Action -->
+<div class="bg-white p-2 rounded-full shadow-lg border border-primary/10">
+<button class="w-full py-5 bg-gradient-to-r from-primary to-primary-container text-white font-manrope font-extrabold text-lg rounded-full hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-3">
+            Confirm and Render Slides
+            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="text-center text-[10px] text-slate-400 mt-3 font-medium px-4">Estimated render time: 14 seconds using Turbo Engine</p>
+</div>
+</aside>
+</div>
+</main>
+<!-- SideNavBar Suppression logic: Hidden as this is a Task-Focused step -->
+<!-- Footer (Shared Component) -->
+<footer class="bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800/50 full-width py-6 mt-auto">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-8">
+<p class="text-xs font-inter tracking-wide text-slate-400">© 2024 CognitiveCanvas AI. All rights reserved.</p>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a class="text-xs font-inter tracking-wide text-slate-500 hover:underline" href="#">Support</a>
+<a class="text-xs font-inter tracking-wide text-slate-500 hover:underline" href="#">Privacy</a>
+<a class="text-xs font-inter tracking-wide text-slate-500 hover:underline" href="#">Terms</a>
+<a class="text-xs font-inter tracking-wide text-slate-500 hover:underline" href="#">Documentation</a>
+</div>
+</div>
+</footer>
+</body></html>

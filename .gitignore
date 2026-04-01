@@ -1,0 +1,92 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+*.lcov
+
+# Next.js build output
+/.next/
+/out/
+.next/
+dist/
+build/
+
+# Production
+*.prod.js
+*.prod.css
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+pnpm-debug.log*
+
+# Environment variables (never commit secrets)
+.env
+.env.local
+.env.*.local
+.env.production
+.env.production.local
+.env.development.local
+.env.test.local
+
+# Database
+prisma/dev.db
+prisma/dev.db-shm
+prisma/dev.db-wal
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploads & Runtime Directories
+/uploads/
+/cache/
+/slides/
+/exports/
+/tmp/
+/temp/
+
+# IDE & Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.sublime-workspace
+.sublime-project
+*.iml
+.history/
+.nyc_output
+.eslintcache
+
+# OS
+.DS_Store
+Thumbs.db
+*.pem
+ehthumbs.db
+
+# Build artifacts
+*.tsbuildinfo
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+# Runtime
+ngrok-config.yml
+
+# Performance profiling
+.pprof
+profile-*.json
+
+# Monorepo tools
+.turbo
+turbo.json
+
+# Deployment
+vercel.json
+.dockerignore
