@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { type ReactNode } from "react";
 
 type ActiveNav = "projects" | "templates" | null;
@@ -24,31 +24,6 @@ const navItems: Array<{ key: Exclude<ActiveNav, null>; label: string; href: stri
   { key: "templates", label: "Templates", href: "/templates" },
 ];
 
-function getInitials(userLabel?: string | null) {
-  if (!userLabel) {
-    return "CC";
-  }
-
-  const parts = userLabel.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) {
-    return "CC";
-  }
-
-  return parts
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase() ?? "")
-    .join("");
-}
-
-function getActionClasses(disabled?: boolean) {
-  return [
-    "inline-flex items-center gap-2 rounded-2xl px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition-all",
-    disabled
-      ? "cursor-not-allowed bg-slate-300 text-slate-500 shadow-none"
-      : "bg-gradient-to-br from-primary to-primary-container hover:-translate-y-0.5 hover:shadow-primary/30 active:translate-y-0",
-  ].join(" ");
-}
-
 export function ProductTopBar({
   activeNav = null,
   userLabel,
@@ -62,90 +37,81 @@ export function ProductTopBar({
   onLogout,
 }: ProductTopBarProps) {
   const pathname = usePathname();
+  const router = useRouter();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/30 bg-white/78 backdrop-blur-2xl">
-      <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between gap-6 px-6 py-4">
-        <div className="flex items-center gap-8">
-          <Link href="/" className="font-headline text-2xl font-extrabold tracking-tight text-slate-900">
-            CognitiveCanvas
-          </Link>
-          <nav className="hidden items-center gap-2 md:flex">
-            {navItems.map((item) => {
-              const isActive = activeNav === item.key || pathname === item.href;
-
-              return (
-                <Link
-                  key={item.key}
-                  href={item.href}
-                  className={[
-                    "rounded-full px-4 py-2 text-sm font-semibold transition-colors",
-                    isActive
-                      ? "bg-blue-50 text-primary"
-                      : "text-slate-500 hover:bg-slate-100 hover:text-primary",
-                  ].join(" ")}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <div className="hidden lg:block">{searchSlot}</div>
-          {extraActions}
-          {actionLabel && actionHref ? (
-            <Link href={actionHref} className={getActionClasses(actionDisabled)} aria-disabled={actionDisabled}>
-              {actionIcon ? <span className="material-symbols-outlined text-[18px]">{actionIcon}</span> : null}
-              <span>{actionLabel}</span>
-            </Link>
-          ) : null}
-          {actionLabel && onAction ? (
-            <button
-              type="button"
-              onClick={onAction}
-              disabled={actionDisabled}
-              className={getActionClasses(actionDisabled)}
-            >
-              {actionIcon ? <span className="material-symbols-outlined text-[18px]">{actionIcon}</span> : null}
-              <span>{actionLabel}</span>
-            </button>
-          ) : null}
-          <div className="hidden items-center gap-3 pl-3 md:flex md:border-l md:border-slate-200/70">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-tertiary text-xs font-bold text-white shadow-md shadow-primary/20">
-              {getInitials(userLabel)}
-            </div>
-            <div className="max-w-[180px]">
-              <div className="truncate text-sm font-semibold text-slate-900">{userLabel || "CognitiveCanvas"}</div>
-              <div className="text-[11px] uppercase tracking-[0.2em] text-slate-400">Workspace</div>
-            </div>
-            {onLogout ? (
-              <button
-                type="button"
-                onClick={onLogout}
-                className="rounded-full px-3 py-1.5 text-xs font-semibold text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900"
+    <nav className="sticky top-0 z-50 flex justify-between items-center w-full px-6 py-3 bg-white/80 backdrop-blur-xl">
+      <div className="flex items-center gap-8">
+        <Link href="/" className="text-2xl font-bold tracking-tight text-slate-900 font-headline no-underline">
+          CognitiveCanvas
+        </Link>
+        <div className="hidden md:flex items-center gap-6">
+          {navItems.map((item) => {
+            const isActive = activeNav === item.key || pathname === item.href;
+            return (
+              <Link
+                key={item.key}
+                href={item.href}
+                className={`font-medium transition-colors no-underline ${
+                  isActive
+                    ? "text-blue-600 font-bold border-b-2 border-blue-600"
+                    : "text-slate-500 hover:text-blue-500"
+                }`}
               >
-                Sign Out
-              </button>
-            ) : null}
-          </div>
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
       </div>
-    </header>
+
+      <div className="flex items-center gap-4">
+        {searchSlot && <div className="hidden lg:block">{searchSlot}</div>}
+        
+        <button className="p-2 text-slate-500 hover:text-blue-500 transition-colors">
+          <span className="material-symbols-outlined">notifications</span>
+        </button>
+        <button className="p-2 text-slate-500 hover:text-blue-500 transition-colors">
+          <span className="material-symbols-outlined">settings</span>
+        </button>
+
+        {actionLabel && (actionHref || onAction) ? (
+          actionHref ? (
+            <Link
+              href={actionHref}
+              className="bg-gradient-to-br from-primary to-primary-container text-white px-4 py-2 rounded-full text-sm font-semibold transition-transform scale-95 active:scale-90 no-underline hidden md:flex items-center gap-2"
+            >
+              {actionIcon && <span className="material-symbols-outlined text-sm">{actionIcon}</span>}
+              {actionLabel}
+            </Link>
+          ) : (
+            <button
+              onClick={onAction}
+              disabled={actionDisabled}
+              className="bg-gradient-to-br from-primary to-primary-container text-white px-4 py-2 rounded-full text-sm font-semibold transition-transform scale-95 active:scale-90 disabled:opacity-50 hidden md:flex items-center gap-2"
+            >
+              {actionIcon && <span className="material-symbols-outlined text-sm">{actionIcon}</span>}
+              {actionLabel}
+            </button>
+          )
+        ) : null}
+
+        <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-tertiary"></div>
+      </div>
+    </nav>
   );
 }
 
 export function ProductFooter() {
   return (
-    <footer className="border-t border-slate-200/60 bg-slate-50/90">
-      <div className="mx-auto flex max-w-[1600px] flex-col items-center justify-between gap-4 px-8 py-6 text-xs text-slate-400 md:flex-row">
-        <p>© 2026 CognitiveCanvas AI. All rights reserved.</p>
-        <div className="flex flex-wrap items-center justify-center gap-5 text-slate-500">
-          <span>Support</span>
-          <span>Privacy</span>
-          <span>Terms</span>
-          <span>Documentation</span>
+    <footer className="bg-slate-50 py-6 border-t border-slate-200/50">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-8">
+        <span className="text-xs tracking-wide text-slate-400">© 2024 CognitiveCanvas AI. All rights reserved.</span>
+        <div className="flex gap-6 mt-4 md:mt-0">
+          <a className="text-xs text-slate-500 hover:underline" href="#">Support</a>
+          <a className="text-xs text-slate-500 hover:underline" href="#">Privacy</a>
+          <a className="text-xs text-slate-500 hover:underline" href="#">Terms</a>
+          <a className="text-xs text-slate-500 hover:underline" href="#">Documentation</a>
         </div>
       </div>
     </footer>

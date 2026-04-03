@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button, Input, Card, CardContent } from "@/components/ui";
@@ -15,8 +15,13 @@ export default function LoginPage() {
   const login = useLogin();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
+  useEffect(() => {
+    if (isAuthenticated()) {
+      router.push("/");
+    }
+  }, [isAuthenticated, router]);
+
   if (isAuthenticated()) {
-    router.push("/");
     return null;
   }
 

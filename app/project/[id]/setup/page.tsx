@@ -50,206 +50,209 @@ export default function ProjectSetupPage() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-surface">
       <ProductTopBar
         activeNav="projects"
         userLabel={user?.name || user?.email}
         actionLabel="Back to Projects"
         actionIcon="arrow_back"
         actionHref="/"
-        searchSlot={
-          <label className="flex min-w-[260px] items-center gap-3 rounded-full border border-white/70 bg-slate-50 px-4 py-2 shadow-sm">
-            <span className="material-symbols-outlined text-[18px] text-slate-400">search</span>
-            <input
-              placeholder="Search projects..."
-              className="w-full border-none bg-transparent p-0 text-sm text-slate-700 outline-none placeholder:text-slate-400"
-            />
-          </label>
-        }
       />
 
-      <main className="grid min-h-[calc(100vh-146px)] grid-cols-1 lg:grid-cols-12">
-        <section className="border-b border-white/40 bg-surface-container-low px-8 py-10 lg:col-span-3 lg:border-b-0 lg:border-r lg:border-outline-variant/20 lg:px-10 xl:px-14">
-          <div className="lg:sticky lg:top-28">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/85 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-primary shadow-sm">
-              <span className="material-symbols-outlined text-[16px]">tune</span>
-              Setup Flow
-            </div>
-            <h1 className="font-headline text-4xl font-extrabold tracking-tight text-slate-900">Setup Your Canvas</h1>
-            <p className="mt-4 max-w-sm text-sm leading-6 text-slate-500">
-              Transform raw notes, URLs, and supporting documents into a structured presentation brief. The right column keeps the configuration aligned with the approved prototype.
-            </p>
+      <main className="grid min-h-[calc(100vh-66px)] grid-cols-1 lg:grid-cols-12 gap-0">
+        <section className="lg:col-span-3 bg-surface-container-low p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-outline-variant/15">
+          <div className="lg:sticky lg:top-24">
+            <h1 className="font-headline text-3xl font-extrabold tracking-tight text-on-surface mb-6">Setup Your Canvas</h1>
+            <p className="text-on-surface-variant leading-relaxed mb-8">Transform raw data into a narrative masterpiece. Our AI analyzes your content to extract key themes, data points, and structural flow.</p>
 
-            <div className="mt-10 space-y-6">
+            <div className="space-y-6">
               {[
-                ["description", "Step 1", "Provide source material via raw text, links, or upload placeholders."],
-                ["tune", "Step 2", "Set tone, audience, and slide density before generation begins."],
-                ["auto_awesome", "Step 3", "Hand the brief to the AI pipeline for outline planning and rendering."],
-              ].map(([icon, step, text], index) => (
-                <div key={step} className="flex gap-4">
-                  <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${index === 1 ? "bg-tertiary/10 text-tertiary" : "bg-primary/10 text-primary"}`}>
+                ["description", "Step 1", "Provide source material via text, file, or web URL.", "primary"],
+                ["tune", "Step 2", "Configure tone, audience, and slide density.", "tertiary"],
+                ["auto_awesome", "Step 3", "Generate a structured outline for your review.", "primary"],
+              ].map(([icon, step, text, color], i) => (
+                <div key={i} className="flex gap-4">
+                  <div className={`h-10 w-10 shrink-0 rounded-full flex items-center justify-center ${color === "tertiary" ? "bg-tertiary/10 text-tertiary" : "bg-primary/10 text-primary"}`}>
                     <span className="material-symbols-outlined">{icon}</span>
                   </div>
                   <div>
-                    <div className={`mb-1 text-xs font-bold uppercase tracking-[0.2em] ${index === 1 ? "text-tertiary" : "text-primary"}`}>{step}</div>
-                    <p className="text-sm leading-6 text-slate-500">{text}</p>
+                    <h3 className={`font-semibold text-sm uppercase tracking-wider ${color === "tertiary" ? "text-tertiary" : "text-primary"} mb-1`}>{step}</h3>
+                    <p className="text-sm text-on-surface-variant">{text}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="mt-12 rounded-[28px] bg-white/90 p-5 shadow-sm ring-1 ring-white/70">
-              <div className="mb-4 flex aspect-[4/3] items-center justify-center rounded-[20px] bg-gradient-to-br from-blue-100 to-violet-100 text-primary">
-                <span className="material-symbols-outlined text-6xl">palette</span>
+            <div className="mt-16 p-6 rounded-2xl bg-white shadow-sm border border-outline-variant/15">
+              <div className="w-full h-32 rounded-xl mb-4 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
+                <span className="material-symbols-outlined text-5xl text-blue-300">palette</span>
               </div>
-              <p className="text-xs italic leading-6 text-slate-400">"Design is intelligence made visible."</p>
+              <p className="text-xs font-medium text-slate-400 italic">"Design is intelligence made visible."</p>
             </div>
           </div>
         </section>
 
-        <section className="bg-surface px-8 py-10 lg:col-span-6 xl:px-14">
-          <div className="mx-auto max-w-3xl space-y-9">
+        <section className="lg:col-span-6 bg-surface p-8 lg:p-12 overflow-y-auto">
+          <div className="mx-auto max-w-3xl space-y-10">
             <section>
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <label className="text-lg font-bold text-slate-900">Project Details</label>
-                <span className="rounded-full bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400 ring-1 ring-slate-200">Editable</span>
+              <div className="mb-4 flex items-center justify-between">
+                <label className="text-lg font-bold font-headline text-on-surface">Project Details</label>
+                <span className="text-xs font-medium text-on-surface-variant bg-surface-container-high px-2 py-1 rounded-lg">Edit</span>
               </div>
-              <div className="space-y-4 rounded-[28px] bg-white/82 p-6 shadow-sm ring-1 ring-white/70">
-                <Input label="Project Name" value={name} onChange={(event) => setName(event.target.value)} placeholder="My Presentation" />
-                <Input label="Description" value={description} onChange={(event) => setDescription(event.target.value)} placeholder="A brief description of your presentation" />
+              <div className="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/15 p-6 space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-on-surface mb-3">Project Title</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                    className="w-full px-4 py-3 rounded-xl border border-outline-variant/15 bg-surface-container-low text-on-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none"
+                    placeholder="e.g., Annual Sales Kickoff"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-on-surface mb-3">Description</label>
+                  <textarea
+                    value={description}
+                    onChange={(event) => setDescription(event.target.value)}
+                    rows={2}
+                    className="w-full px-4 py-3 rounded-xl border border-outline-variant/15 bg-surface-container-low text-on-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none resize-none"
+                    placeholder="What is this presentation about?"
+                  />
+                </div>
               </div>
             </section>
 
             <section>
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <label className="text-lg font-bold text-slate-900">Input Content</label>
-                <span className="rounded-full bg-surface-container-high px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">4,000 char guide</span>
+              <div className="mb-4 flex items-center justify-between">
+                <label className="text-lg font-bold font-headline text-on-surface">Input Content</label>
+                <span className="text-xs font-medium text-on-surface-variant bg-surface-container-high px-2 py-1 rounded-lg">4,000 char limit</span>
               </div>
-              <div className="rounded-[28px] bg-white/82 p-2 shadow-sm ring-1 ring-white/70 focus-within:ring-primary/20">
+              <div className="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/15 p-1 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
                 <textarea
                   value={content}
                   onChange={(event) => setContent(event.target.value)}
-                  placeholder="Paste research, meeting notes, or a transcript here..."
-                  className="h-72 w-full resize-none rounded-[22px] border-none bg-transparent px-4 py-4 text-sm leading-6 text-slate-700 outline-none placeholder:text-slate-400"
+                  className="w-full h-64 bg-transparent border-none focus:ring-0 p-4 text-on-surface font-body resize-none"
+                  placeholder="Paste your research, notes, or raw transcript here..."
                 />
               </div>
             </section>
 
             <section>
-              <label className="mb-3 block text-sm font-semibold text-slate-600">Import from Web</label>
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <div className="flex flex-1 items-center gap-3 rounded-[22px] bg-white/82 px-4 py-3 shadow-sm ring-1 ring-white/70 focus-within:ring-primary/20">
-                  <span className="material-symbols-outlined text-slate-400">link</span>
+              <label className="block text-sm font-semibold text-on-surface-variant mb-3">Import from Web</label>
+              <div className="flex gap-3">
+                <div className="flex-grow bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/15 flex items-center px-4 py-3 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+                  <span className="material-symbols-outlined text-slate-400 mr-3">link</span>
                   <input
+                    type="url"
                     value={sourceUrl}
                     onChange={(event) => setSourceUrl(event.target.value)}
+                    className="w-full bg-transparent border-none focus:ring-0 p-0 text-sm outline-none"
                     placeholder="https://example.com/article"
-                    className="w-full border-none bg-transparent p-0 text-sm outline-none placeholder:text-slate-400"
                   />
                 </div>
-                <Button variant="secondary" className="px-6">Fetch</Button>
+                <Button variant="secondary" className="px-6">
+                  <span className="material-symbols-outlined">download</span>
+                  Fetch
+                </Button>
               </div>
             </section>
 
             <section>
-              <label className="mb-3 block text-sm font-semibold text-slate-600">Upload Documents</label>
-              <div className="group flex cursor-pointer flex-col items-center justify-center rounded-[28px] border-2 border-dashed border-outline-variant/40 bg-white/55 px-6 py-12 text-center transition-colors hover:bg-white/72">
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white text-primary shadow-sm transition-transform group-hover:scale-105">
-                  <span className="material-symbols-outlined text-4xl">upload_file</span>
+              <label className="block text-sm font-semibold text-on-surface-variant mb-3">Upload Documents</label>
+              <div className="border-2 border-dashed border-outline-variant/40 rounded-2xl p-10 flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer group">
+                <div className="h-16 w-16 rounded-full bg-white shadow-sm flex items-center justify-center text-primary group-hover:scale-110 transition-transform mb-4">
+                  <span className="material-symbols-outlined text-3xl">upload_file</span>
                 </div>
-                <p className="font-semibold text-slate-900">Drop files here or click to browse</p>
-                <p className="mt-2 text-xs text-slate-500">Support for PDF, Markdown, and TXT (Max 10MB)</p>
+                <p className="text-on-surface font-semibold">Drop files here or click to browse</p>
+                <p className="text-on-surface-variant text-xs mt-2">Support for PDF, Markdown, and TXT (Max 10MB)</p>
               </div>
             </section>
           </div>
         </section>
 
-        <aside className="border-t border-white/40 bg-white/50 px-8 py-10 backdrop-blur-2xl lg:col-span-3 lg:border-l lg:border-t-0 lg:border-outline-variant/20 lg:px-8 xl:px-10">
-          <div className="flex h-full flex-col">
-            <h2 className="mb-8 flex items-center gap-2 text-2xl font-bold tracking-tight text-slate-900">
-              <span className="material-symbols-outlined text-tertiary">settings_input_component</span>
-              Configuration
-            </h2>
-
-            <div className="space-y-8">
-              <div>
-                <div className="mb-4 flex items-center justify-between">
-                  <label className="text-sm font-bold text-slate-900">Target Slide Count</label>
-                  <span className="rounded-lg bg-primary/10 px-2 py-1 text-sm font-bold text-primary">{slideCount}</span>
-                </div>
-                <input
-                  type="range"
-                  min={5}
-                  max={30}
-                  value={slideCount}
-                  onChange={(event) => setSlideCount(Number(event.target.value))}
-                  className="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-primary"
-                />
-                <div className="mt-2 flex justify-between text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                  <span>Min (5)</span>
-                  <span>Max (30)</span>
-                </div>
+        <aside className="lg:col-span-3 bg-surface-container-high/50 backdrop-blur-2xl p-8 lg:p-10 flex flex-col border-t lg:border-t-0 lg:border-l border-outline-variant/15">
+          <h2 className="text-xl font-bold font-headline text-on-surface mb-8 flex items-center gap-2">
+            <span className="material-symbols-outlined text-tertiary">settings_input_component</span>
+            Configuration
+          </h2>
+          
+          <div className="space-y-8 flex-grow">
+            <div>
+              <div className="flex justify-between items-center mb-4">
+                <label className="text-sm font-bold text-on-surface">Target Slide Count</label>
+                <span className="text-primary font-bold bg-primary/10 px-2 py-0.5 rounded-lg text-sm">{slideCount}</span>
               </div>
-
-              <div>
-                <label className="mb-4 block text-sm font-bold text-slate-900">Presentation Tone</label>
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setTone("professional")}
-                    className={`flex flex-col items-center justify-center rounded-[22px] border-2 p-4 text-center transition-all ${tone === "professional" ? "border-primary bg-primary/5 text-primary" : "border-transparent bg-white/60 text-slate-500 hover:bg-white"}`}
-                  >
-                    <span className="material-symbols-outlined mb-2">work</span>
-                    <span className="text-xs font-bold">Professional</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setTone("creative")}
-                    className={`flex flex-col items-center justify-center rounded-[22px] border-2 p-4 text-center transition-all ${tone === "creative" ? "border-primary bg-primary/5 text-primary" : "border-transparent bg-white/60 text-slate-500 hover:bg-white"}`}
-                  >
-                    <span className="material-symbols-outlined mb-2">brush</span>
-                    <span className="text-xs font-bold">Creative</span>
-                  </button>
-                </div>
+              <input
+                type="range"
+                min="5"
+                max="30"
+                value={slideCount}
+                onChange={(event) => setSlideCount(Number(event.target.value))}
+                className="w-full h-2 bg-outline-variant rounded-lg appearance-none cursor-pointer accent-primary"
+              />
+              <div className="flex justify-between mt-2 text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
+                <span>Min (5)</span>
+                <span>Max (30)</span>
               </div>
+            </div>
 
-              <div>
-                <label className="mb-4 block text-sm font-bold text-slate-900">Target Audience</label>
-                <select
-                  value={audience}
-                  onChange={(event) => setAudience(event.target.value)}
-                  className="w-full rounded-[18px] border border-outline-variant/40 bg-white px-4 py-3 text-sm outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
+            <div>
+              <label className="block text-sm font-bold text-on-surface mb-4">Presentation Tone</label>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => setTone("professional")}
+                  className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all ${
+                    tone === "professional"
+                      ? "border-primary bg-primary/5 text-primary"
+                      : "border-transparent bg-white/50 text-slate-500 hover:bg-white"
+                  }`}
                 >
-                  <option>Executive Leadership</option>
-                  <option>Technical Team</option>
-                  <option>General Public</option>
-                  <option>Sales Prospect</option>
-                </select>
-              </div>
-
-              <div className="rounded-[24px] border border-tertiary/10 bg-tertiary/5 p-4">
-                <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-tertiary">
-                  <span className="material-symbols-outlined text-sm">bolt</span>
-                  Engine Power
-                </div>
-                <p className="text-xs leading-6 text-slate-500">
-                  Using <span className="font-bold text-slate-900">GPT-5.4 compatible orchestration</span> for narrative synthesis and slide structure planning.
-                </p>
+                  <span className="material-symbols-outlined mb-2" style={{ fontVariationSettings: "'FILL' 1" }}>work</span>
+                  <span className="text-xs font-bold">Professional</span>
+                </button>
+                <button
+                  onClick={() => setTone("creative")}
+                  className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all ${
+                    tone === "creative"
+                      ? "border-primary bg-primary/5 text-primary"
+                      : "border-transparent bg-white/50 text-slate-500 hover:bg-white"
+                  }`}
+                >
+                  <span className="material-symbols-outlined mb-2">brush</span>
+                  <span className="text-xs font-bold">Creative</span>
+                </button>
               </div>
             </div>
 
-            <div className="mt-12 border-t border-outline-variant/20 pt-8">
-              <Button
-                className="w-full py-4 text-base"
-                onClick={handleStartGeneration}
-                loading={updateProject.isPending}
-                disabled={!name.trim()}
+            <div>
+              <label className="block text-sm font-bold text-on-surface mb-4">Target Audience</label>
+              <select
+                value={audience}
+                onChange={(event) => setAudience(event.target.value)}
+                className="w-full bg-white border border-outline-variant/30 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none"
               >
-                Start Generating
-                <span className="material-symbols-outlined text-[18px]">auto_mode</span>
-              </Button>
-              <p className="mt-4 text-center text-[11px] font-medium uppercase tracking-[0.2em] text-slate-400">Estimated processing time: ~45 seconds</p>
+                <option>Executive Leadership</option>
+                <option>Technical Team</option>
+                <option>General Public</option>
+                <option>Sales Prospect</option>
+              </select>
             </div>
+
+            <div className="p-4 rounded-2xl bg-tertiary/5 border border-tertiary/10">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="material-symbols-outlined text-tertiary text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
+                <span className="text-xs font-bold text-tertiary uppercase tracking-wider">Engine Power</span>
+              </div>
+              <p className="text-xs text-on-surface-variant leading-relaxed">Using <span className="font-bold text-on-surface">GPT-4 Omni</span> for maximum creative reasoning and data synthesis.</p>
+            </div>
+          </div>
+
+          <div className="mt-12 pt-8 border-t border-outline-variant/15">
+            <Button className="w-full py-4 px-6 rounded-2xl text-lg" onClick={handleStartGeneration}>
+              Start Generating
+              <span className="material-symbols-outlined">auto_mode</span>
+            </Button>
           </div>
         </aside>
       </main>

@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api/client";
+import { useAuthStore } from "@/store/authStore";
 
 export interface Slide {
   id: string;
@@ -52,17 +53,22 @@ export interface Project {
 }
 
 export function useProjects() {
+  const token = useAuthStore((state) => state.token);
+
   return useQuery({
     queryKey: ["projects"],
     queryFn: () => api.get<ProjectListItem[]>("/projects"),
+    enabled: !!token,
   });
 }
 
 export function useProject(id: string) {
+  const token = useAuthStore((state) => state.token);
+
   return useQuery({
     queryKey: ["projects", id],
     queryFn: () => api.get<Project>(`/projects/${id}`),
-    enabled: !!id,
+    enabled: !!id && !!token,
   });
 }
 
