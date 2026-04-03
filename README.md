@@ -76,6 +76,8 @@ ContentExtraction → Outline Planning → Content Writing
 - JSON Schema validation for type safety
 - Create and save custom templates
 
+> Current implementation note: Template management features are implemented as an MVP. The repository includes a file-backed template/asset store and CRUD API routes for `layout-patterns` and `assets`, plus frontend management pages under `/templates/layout-patterns` and `/templates/assets`. Vision LLM-based layout extraction and asynchronous PPT parsing/classification are not yet integrated — those remain TODOs.
+
 ### Smart Chat Editor
 - Edit single slides with natural language ("Add a call-to-action", "Change the background color")
 - Intent toggle (EDIT mode: modify existing content, ADD mode: new bullets/elements)
@@ -86,6 +88,8 @@ ContentExtraction → Outline Planning → Content Writing
 - PPTX (Microsoft PowerPoint)
 - PDF (with speaker notes)
 - HTML (web-shareable)
+
+> Current implementation note: Export in this codebase is currently a mock implementation that returns a placeholder URL. The export pipeline exists but the PPTX/PDF generation is not yet fully implemented.
 
 ## 🛠️ Tech Stack
 
@@ -103,7 +107,7 @@ ContentExtraction → Outline Planning → Content Writing
 | **Content Parsing** | pdf-parse (PDFs), cheerio + axios (web scraping) |
 | **Security** | DOMPurify (SVG sanitization), bcrypt (password hashing) |
 | **Concurrency** | p-queue (configurable LLM request queuing) |
-| **Testing** | Jest (configured, tests in progress) |
+| **Testing** | Planned (Jest suggested in docs); no test suites are present in the repository yet |
 | **Deployment** | Docker + Docker Compose + Nginx |
 
 ## 📁 Project Structure
