@@ -1,196 +1,162 @@
-# Contributing to CognitiveCanvas
+# Contributing to DeckGenie
 
-Welcome! This document outlines how to set up, develop, and contribute to the CognitiveCanvas PPT generation platform.
+Welcome! This document outlines how to set up, develop, and contribute to the DeckGenie presentation generation platform.
 
 ## Quick Start
 
 ### Prerequisites
-- Node.js 18+
-- npm 9+
+- **Backend**: Go 1.21+
+- **Frontend**: Node.js 18+ and npm 9+
 - Git
 
 ### Setup
 
 ```bash
-# 1. Clone and install
+# 1. Clone the repository
 git clone <repo-url>
 cd ppt-agent
+
+# 2. Start backend
+cd backend-go
+go mod tidy
+./start-dev.sh
+
+# 3. Start frontend (in another terminal)
+cd frontend-react
 npm install
-
-# 2. Configure environment
-cp .env.example .env.local
-# Edit .env.local with your LLM API credentials
-
-# 3. Initialize database
-npx prisma migrate dev
-npm run db:seed
-
-# 4. Start development server
 npm run dev
 ```
 
-Your app is now live at `http://localhost:3000`.
+Your app is now live at:
+- Frontend: `http://localhost:5173`
+- Backend API: `http://localhost:8080`
 
-**Test Credentials** (after seed):
-- Email: `demo@cognitivecanvas.ai`
-- Password: `demo123`
+**Test Account**:
+- Email: `test@example.com`
+- Password: `password123`
 
 ## Development Workflow
 
 ### Making Changes
 
-1. **Pick a task** from the [GitHub Project](../../../projects) or issues
+1. **Pick a task** from GitHub Issues
 2. **Create a branch**: `git checkout -b feature/my-feature`
-3. **Make your change** following patterns in [.github/copilot-instructions.md](.github/copilot-instructions.md)
-4. **Test locally**: `npm run dev` (or `npm run build` for production test)
+3. **Make your changes**:
+   - Backend: Follow Go conventions, use GORM for database
+   - Frontend: Use TypeScript strictly, follow React best practices
+4. **Test locally**:
+   - Backend: `go test ./...`
+   - Frontend: `npm run build`
 5. **Commit with semantic messages**: `feat: add slide thumbnail preview`
 6. **Push and open a PR** against `main`
 
-### Code Style
+## Code Style
 
-- Use TypeScript (strict mode)
-- Format with Prettier (automatic on save in VS Code)
-- Lint with ESLint (run via `npm run lint`)
-- Follow patterns in `.github/copilot-instructions.md`
+### Backend (Go)
+- Follow standard Go formatting (`gofmt`)
+- Use meaningful variable names
+- Add comments for exported functions
+- Handle errors explicitly
+- Use GORM for database operations
 
-### Testing Before Submit
-
-```bash
-npm run build              # Verify production build
-npm run lint              # Check code quality (when configured)
-```
-
-Both must pass before pushing.
+### Frontend (React)
+- Use TypeScript for all files
+- Follow React hooks best practices
+- Use functional components
+- Keep components small and focused
+- Use Tailwind CSS for styling
 
 ## Project Structure
 
-See `.github/copilot-instructions.md` under "Directory Structure Quick Reference" for a detailed breakdown.
+### Backend
+```
+backend-go/
+├── cmd/server/          # Entry point
+├── internal/
+│   ├── handlers/        # HTTP handlers
+│   ├── middleware/      # Middleware
+│   ├── models/          # Database models
+│   └── utils/           # Utilities
+└── data/                # SQLite database
+```
 
-In brief:
-- **Frontend pages**: `app/` (Next.js App Router)
-- **API routes**: `app/api/v1/`
-- **Components**: `components/ui/` (base) + `components/layout/` (product shell)
-- **Hooks**: `hooks/` (data fetching via React Query)
-- **State**: `store/` (Zustand stores)
-- **Database**: `prisma/schema.prisma`
-- **Docs**: `docs/` (detailed specs, read-only)
+### Frontend
+```
+frontend-react/
+├── src/
+│   ├── pages/           # Page components
+│   ├── components/      # Reusable components
+│   ├── hooks/           # Custom hooks
+│   ├── store/           # State management
+│   └── lib/             # API client
+└── public/              # Static assets
+```
 
-## Key Technologies
+## Testing
 
-- **Next.js 14** (App Router, SSR/SSG)
-- **TypeScript** (strict mode)
-- **Tailwind CSS** (design tokens in `app/globals.css`)
-- **React Query** (server state)
-- **Zustand** (client state)
-- **Prisma ORM** (SQLite for dev, PostgreSQL for prod)
-- **Material Symbols Outlined** (icons)
+### Backend
+```bash
+cd backend-go
+go test ./...
+go test -v ./internal/handlers
+```
 
-See [CLAUDE.md](../CLAUDE.md) for full tech stack.
+### Frontend
+```bash
+cd frontend-react
+npm run build  # Check for TypeScript errors
+npm run lint   # Run linter
+```
 
 ## Common Tasks
 
-### Add a New API Endpoint
+### Adding a New API Endpoint
 
-1. Create `app/api/v1/{resource}/route.ts`
-2. Use `authMiddleware` for protection
-3. Import response helpers from `lib/utils/api.ts`
-4. Validate input with `lib/utils/validation.ts`
-5. Return formatted response
+1. Define the model in `backend-go/internal/models/models.go`
+2. Create handler in `backend-go/internal/handlers/`
+3. Register route in `backend-go/cmd/server/main.go`
+4. Add API call in `frontend-react/src/lib/api.ts`
+5. Create React hook in `frontend-react/src/hooks/`
 
-**Example**: [Adding a New API Endpoint in .github/copilot-instructions.md](.github/copilot-instructions.md#creating-a-new-api-endpoint)
+### Adding a New Page
 
-### Add a New Page
+1. Create component in `frontend-react/src/pages/`
+2. Add route in `frontend-react/src/App.tsx`
+3. Update navigation in `frontend-react/src/components/ProductChrome.tsx`
 
-1. Create `app/{route}/page.tsx`
-2. Mark as `"use client"` if interactive
-3. Import `ProductTopBar` + `ProductFooter`
-4. Use custom hooks for data
-5. Use base components from `components/ui/`
+## Commit Message Format
 
-**Example**: [Adding a New Page in .github/copilot-instructions.md](.github/copilot-instructions.md#adding-a-new-page)
+Use semantic commit messages:
 
-### Update Database Schema
+- `feat:` - New feature
+- `fix:` - Bug fix
+- `docs:` - Documentation changes
+- `style:` - Code style changes (formatting)
+- `refactor:` - Code refactoring
+- `test:` - Adding tests
+- `chore:` - Maintenance tasks
 
-1. Edit `prisma/schema.prisma`
-2. Run `npx prisma migrate dev`
-3. Provide a migration name (e.g., `add_user_avatar`)
-4. Commit `.prisma/migrations/` folder
-
-### Reset Development Database
-
-```bash
-npm run db:seed  # Drops, recreates, and seeds with demo data
+Examples:
+```
+feat: add project delete functionality
+fix: resolve login token expiration issue
+docs: update API documentation
 ```
 
-## Design & Prototypes
+## Pull Request Guidelines
 
-All UI was built to match the approved interactive prototypes in `interactive-prototypes/`:
-- `projects.html` → Dashboard (`app/page.tsx`)
-- `setup.html` → Setup flow (`app/project/[id]/setup/page.tsx`)
-- `generating.html` → Generation view (`app/project/[id]/generating/page.tsx`)
-- `editor.html` → Editor workspace (`app/project/[id]/page.tsx`)
-- `templates.html` → Template browser (`app/templates/page.tsx`)
+1. **Title**: Clear and descriptive
+2. **Description**: Explain what and why
+3. **Testing**: Describe how you tested
+4. **Screenshots**: Include for UI changes
+5. **Breaking Changes**: Clearly document
 
-When adding UI features, check the prototype first to match layout/interaction patterns.
+## Getting Help
 
-**Design System**: See `app/globals.css` for color tokens, typography, and utilities.
+- Check existing issues and documentation
+- Ask questions in GitHub Discussions
+- Review code in `archive-nextjs/` for reference
 
-## Documentation
+## License
 
-- **System Overview**: [CLAUDE.md](../CLAUDE.md)
-- **Agent Instructions**: [.github/copilot-instructions.md](.github/copilot-instructions.md)
-- **Detailed Specs**: [docs/](../docs/) folder
-  - `ppt-agent-design.md` → Product & architecture
-  - `api-design.md` → API endpoints
-  - `database-design.md` → Schema & relationships
-  - `svg-template-spec.md` → Template system
-  - `security-design.md` → Auth & validation
-  - `agent-prompt-design.md` → Agent implementations
-  - And more...
-
-Refer to docs when implementing features; don't duplicate information.
-
-## Troubleshooting
-
-### "Cannot find module '@/components/ui'"
-Ensure `tsconfig.json` has `paths` configured (it should already). Restart your TypeScript server in VS Code.
-
-### "Database is locked"
-SQLite WAL mode issue. Run:
-```bash
-npx prisma db push --force-reset  # Warning: loses all data
-npm run db:seed
-```
-
-### Build fails with type errors
-Run full type check:
-```bash
-npx tsc --noEmit
-```
-
-Check error messages and see `.github/copilot-instructions.md` anti-patterns section.
-
-### "npm test" not working
-Testing infrastructure is planned but not yet implemented. See [docs/testing-strategy.md](../docs/testing-strategy.md) for the roadmap.
-
-## Deployment
-
-The project uses Docker + Docker Compose for production. See [docs/deployment.md](../docs/deployment.md) for full setup.
-
-Quick preview:
-```bash
-docker compose up -d --build  # Builds and starts all services
-```
-
-Ensure `.env.production` is configured before deploying.
-
-## Need Help?
-
-1. Check `.github/copilot-instructions.md` for patterns and FAQs
-2. Read relevant docs in `docs/`
-3. Look at similar existing code (best examples are in `app/api/v1/projects/` and `hooks/useProjects.ts`)
-4. Open an issue or ask in the project Slack/Discord
-
----
-
-**Happy coding!** 🚀
+By contributing, you agree that your contributions will be licensed under the MIT License.

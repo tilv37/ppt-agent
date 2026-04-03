@@ -1,38 +1,51 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
+name: Bug报告
+about: 报告项目中的Bug
+title: '[BUG] '
+labels: bug
 assignees: ''
-
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+## Bug描述
+<!-- 清晰简洁地描述这个Bug -->
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+## 复现步骤
+<!-- 详细说明如何复现这个问题 -->
+1. 进入 '...'
+2. 点击 '...'
+3. 滚动到 '...'
+4. 看到错误
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+## 预期行为
+<!-- 描述你期望发生什么 -->
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+## 实际行为
+<!-- 描述实际发生了什么 -->
 
-**Additional context**
-Add any other context about the problem here.
+
+## 截图/录屏
+<!-- 如果适用，添加截图或录屏帮助解释问题 -->
+
+
+## 环境信息
+<!-- 请完整填写以下信息 -->
+- 操作系统: [例如 macOS 13.0, Windows 11, Ubuntu 22.04]
+- 浏览器: [例如 Chrome 120, Firefox 121, Safari 17]
+- 项目版本/分支: [例如 master, v1.0.0]
+- 前端/后端: [前端/后端/两者都有]
+
+## 错误日志
+<!-- 如果有相关的错误日志或控制台输出，请粘贴在此 -->
+```
+粘贴错误日志
+```
+
+## 可能的原因
+<!-- 如果你有想法，可以描述可能的原因 -->
+
+
+## 额外信息
+<!-- 其他有助于解决问题的信息 -->
+

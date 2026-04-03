@@ -1,20 +1,49 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
+name: 功能请求
+about: 提出新功能或改进建议
+title: '[FEATURE] '
+labels: enhancement
 assignees: ''
-
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+## 功能描述
+<!-- 清晰简洁地描述你想要的功能 -->
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+## 使用场景
+<!-- 描述这个功能的使用场景和价值 -->
+作为 [用户角色]，我希望 [功能描述]，以便 [达成目标]。
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+## 问题背景
+<!-- 描述当前存在什么问题或不便 -->
+
+
+## 期望的解决方案
+<!-- 描述你期望的实现方式 -->
+
+
+## 可选方案
+<!-- 如果有其他可行的方案，请在此描述 -->
+
+
+## 优先级
+<!-- 请评估这个功能的优先级 -->
+- [ ] 高 - 核心功能，急需实现
+- [ ] 中 - 重要功能，近期需要
+- [ ] 低 - 锦上添花，可以延后
+
+## 影响范围
+<!-- 这个功能会影响哪些模块 -->
+- [ ] 前端UI
+- [ ] 后端API
+- [ ] 数据库
+- [ ] AI生成流程
+- [ ] 其他: ___________
+
+## 参考资料
+<!-- 如果有相关的参考资料、竞品案例或设计稿，请在此列出 -->
+
+
+## 额外信息
+<!-- 其他有助于理解这个功能的信息 -->
+

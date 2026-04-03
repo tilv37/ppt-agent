@@ -1,11 +1,12 @@
-# CognitiveCanvas - AI-Powered Presentation Generation Platform
+# DeckGenie - AI-Powered Presentation Generation Platform
 
-![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue?logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.2-38B2AC?logo=tailwind-css)
+![Go](https://img.shields.io/badge/Go-1.21-00ADD8?logo=go)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.0-38B2AC?logo=tailwind-css)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-**CognitiveCanvas** is an AI-powered presentation generation system that transforms raw content (text, PDF, URLs) into polished, visually coherent slide decks in seconds through an intelligent 9-agent ReAct pipeline.
+**DeckGenie** is an AI-powered presentation generation system that transforms raw content (text, PDF, URLs) into polished, visually coherent slide decks through an intelligent multi-agent pipeline.
 
 ## 🎯 What It Does
 
@@ -16,11 +17,26 @@
 - **Quality Review**: Multi-pass validation with back-pressure refinement loops
 - **Real-Time Feedback**: Watch the generation pipeline in action with live agent progress
 
+## 🏗️ Architecture
+
+This project uses a **separated frontend-backend architecture**:
+
+- **Backend**: Go + Gin + GORM + SQLite (in `backend-go/`)
+- **Frontend**: React 19 + Vite + TypeScript + Tailwind CSS 4 (in `frontend-react/`)
+
+### Why Separated Architecture?
+
+- **Independent Scaling**: Frontend and backend can be deployed and scaled separately
+- **Technology Flexibility**: Use the best tool for each layer
+- **Team Collaboration**: Frontend and backend teams can work independently
+- **Clear Boundaries**: Well-defined API contracts between layers
+
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18.17+ 
-- npm 9+ or yarn
+
+- **Backend**: Go 1.21+
+- **Frontend**: Node.js 18.17+ and npm 9+
 - Git
 
 ### Installation
@@ -30,344 +46,206 @@
 git clone <repository-url>
 cd ppt-agent
 
-# 2. Install dependencies
+# 2. Start Backend (Terminal 1)
+cd backend-go
+go mod tidy
+./start-dev.sh
+
+# 3. Start Frontend (Terminal 2)
+cd frontend-react
 npm install
-
-# 3. Set up environment
-cp .env.example .env.local
-
-# Edit .env.local with your LLM API credentials:
-# - LLM_BASE_URL (e.g., https://api.openai.com/v1)
-# - LLM_API_KEY (your API key)
-# - LLM_MODEL (default: deepseek-chat, or gpt-4, qwen-max, etc.)
-
-# 4. Initialize database
-npx prisma migrate dev
-npm run db:seed  # Loads demo user + sample templates
-
-# 5. Start development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+### Access the Application
 
-**Demo Credentials** (seeded):
-- Email: `demo@cognitivecanvas.ai`
-- Password: `demo123`
+- **Frontend**: http://localhost:5173
+- **Backend API**: http://localhost:8080
 
-## 📖 Core Features
+### Default Test Account
 
-### Three-Column Workspace
-- **Left**: Navigation (slides, outline, templates)
-- **Center**: Canvas (high-fidelity slide editing, SVG rendering)
-- **Right**: AI Intelligence Panel (contextual chat, editing tools, feedback)
-
-### Multi-Agent Pipeline
 ```
-ContentExtraction → Outline Planning → Content Writing
-    → Layout Selection → Visual Decision
-    → [Image Search | Graphic Generation] (parallel)
-    → Quality Review
+Email: test@example.com
+Password: password123
 ```
-
-### Template System
-- 12 built-in categories: Cover, ToC, Section Header, Text, Two-Column, Image+Text, Chart, Timeline, Comparison, Quote, Team, Ending
-- SVG-based templates with slot-based content injection
-- JSON Schema validation for type safety
-- Create and save custom templates
-
-> Current implementation note: Template management features are implemented as an MVP. The repository includes a file-backed template/asset store and CRUD API routes for `layout-patterns` and `assets`, plus frontend management pages under `/templates/layout-patterns` and `/templates/assets`. Vision LLM-based layout extraction and asynchronous PPT parsing/classification are not yet integrated — those remain TODOs.
-
-### Smart Chat Editor
-- Edit single slides with natural language ("Add a call-to-action", "Change the background color")
-- Intent toggle (EDIT mode: modify existing content, ADD mode: new bullets/elements)
-- Real-time slide preview
-- Undo/redo history
-
-### Export Formats
-- PPTX (Microsoft PowerPoint)
-- PDF (with speaker notes)
-- HTML (web-shareable)
-
-> Current implementation note: Export in this codebase is currently a mock implementation that returns a placeholder URL. The export pipeline exists but the PPTX/PDF generation is not yet fully implemented.
-
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| **Frontend** | Next.js 14 (App Router), React 19, TypeScript 6.0 |
-| **State Management** | Zustand (UI), React Query (server state) |
-| **Styling** | Tailwind CSS 4.2, PostCSS 8.5, Custom Design Tokens |
-| **Database** | Prisma ORM 7.6 + SQLite (WAL mode) |
-| **Authentication** | JWT (HS256, 7-day expiry) + bcrypt |
-| **Streaming** | Server-Sent Events (SSE) for real-time agent progress |
-| **LLM Integration** | OpenAI-compatible API (supports DeepSeek, Qwen, GPT-4, etc.) |
-| **SVG Rendering** | @resvg/resvg-js + sharp for server-side optimization |
-| **PPTX Export** | pptxgenjs for PowerPoint generation |
-| **Content Parsing** | pdf-parse (PDFs), cheerio + axios (web scraping) |
-| **Security** | DOMPurify (SVG sanitization), bcrypt (password hashing) |
-| **Concurrency** | p-queue (configurable LLM request queuing) |
-| **Testing** | Planned (Jest suggested in docs); no test suites are present in the repository yet |
-| **Deployment** | Docker + Docker Compose + Nginx |
 
 ## 📁 Project Structure
 
 ```
-app/                           # Next.js App Router
-├── api/v1/                    # REST API endpoints
-│   ├── auth/                  # Login, register, logout
-│   ├── projects/              # CRUD for projects & presentations
-│   ├── pipeline/stream/[id]/   # SSE endpoint for agent progress
-│   ├── chat/                  # Single-slide AI editing
-│   ├── templates/             # Template browser & management
-│   ├── export/                # PPTX/PDF/HTML generation
-│   └── users/me/              # Current user profile
-├── (auth)/                    # Public auth pages (login, register)
-└── (workspace)/               # Protected workspace pages
-    ├── page.tsx              # Projects dashboard
-    ├── templates/page.tsx    # Template browser
-    └── project/[id]/         # Project workspace
-        ├── page.tsx          # Slide editor
-        ├── setup/page.tsx    # Pre-generation configuration
-        └── generating/page.tsx# Real-time generation view
-
-components/
-├── layout/ProductChrome.tsx   # Unified top nav + footer
-└── ui/                        # Base components (Button, Input, Card, etc.)
-
-lib/
-├── api/client.ts              # Typed API client with auth headers
-├── auth/jwt.ts                # Token generation & validation
-├── middleware/auth.ts         # Protected route middleware
-├── prisma.ts                  # Prisma client singleton
-└── utils/                     # Validation, error formatting, SVG sanitization
-
-hooks/
-├── useAuth.ts                 # Authentication (login, register, logout)
-└── useProjects.ts             # Project CRUD operations
-
-store/
-├── authStore.ts               # Zustand: auth state (token, user)
-└── uiStore.ts                 # Zustand: UI state (sidebar, modals)
-
-prisma/
-├── schema.prisma              # Database schema (8 tables)
-├── migrations/                # Schema migration history
-└── seed.ts                    # Demo data seeding
-
-docs/                          # Detailed design & architecture docs
-├── ppt-agent-design.md        # System overview & architecture
-├── api-design.md              # REST API specification
-├── database-design.md         # Schema, indexes, relationships
-├── svg-template-spec.md       # SVG template system specification
-├── security-design.md         # Auth, validation, sanitization
-├── agent-prompt-design.md     # AI agent prompts and schemas
-├── error-handling.md          # Error classification & recovery
-├── performance-cache.md       # Performance targets & optimization
-├── testing-strategy.md        # Jest configuration & test patterns
-├── third-party-integration.md # LLM, Unsplash, pdf-parse, etc.
-└── deployment.md              # Docker, Nginx, SSL, backup
-
-.github/
-├── copilot-instructions.md    # AI agent development guide
-└── workflows/                 # CI/CD pipelines (planned)
-
-interactive-prototypes/        # Approved UI prototypes (reference)
-templates/                     # SVG slide templates + schema JSON
+ppt-agent/
+├── backend-go/              # Go backend (Gin + GORM + SQLite)
+│   ├── cmd/server/          # Main entry point
+│   ├── internal/
+│   │   ├── handlers/        # HTTP handlers
+│   │   ├── middleware/      # Auth middleware
+│   │   ├── models/          # Database models
+│   │   └── utils/           # Utilities
+│   ├── data/                # SQLite database
+│   └── start-dev.sh         # Development startup script
+│
+├── frontend-react/          # React frontend (Vite + TypeScript)
+│   ├── src/
+│   │   ├── components/      # Reusable components
+│   │   ├── pages/           # Page components
+│   │   ├── hooks/           # Custom React hooks
+│   │   ├── store/           # Zustand state management
+│   │   └── lib/             # API client and utilities
+│   ├── public/              # Static assets
+│   └── package.json
+│
+├── docs/                    # Architecture documentation
+├── ui-design/               # Design mockups
+├── interactive-prototypes/  # HTML prototypes
+└── archive-nextjs/          # Archived Next.js full-stack code
 ```
 
-## 💻 Development
+## 🔧 Development
 
-### Available Commands
+### Backend Development
 
 ```bash
-# Development
-npm run dev                    # Start Next.js dev server (port 3000)
+cd backend-go
 
-# Production
-npm run build                  # Build for production
-npm run start                  # Start production server
+# Run with auto-reload (if using air)
+air
 
-# Database
-npx prisma migrate dev        # Create & apply migrations
-npx prisma generate          # Regenerate Prisma client
-npx prisma studio            # Open prisma.io Studio GUI
-npm run db:seed              # Reset & seed demo data
+# Or run directly
+go run cmd/server/main.go
 
-# Testing (planned)
-npm run test                  # Run all tests
-npm run test:watch           # Watch mode
-npm run test:coverage        # Coverage report
+# Run tests
+go test ./...
 
-# Docker
-docker compose up -d --build # Build and run all services
+# Build for production
+go build -o server cmd/server/main.go
 ```
 
-### Development Workflow
+### Frontend Development
 
-1. **Pick a task** from the GitHub Project or issues
-2. **Create a branch**: `git checkout -b feature/my-feature`
-3. **Follow patterns** in [.github/copilot-instructions.md](.github/copilot-instructions.md)
-4. **Test**: `npm run build` (production build must pass)
-5. **Commit**: Use semantic commit messages
-6. **Push & PR**: Open a pull request to `main`
+```bash
+cd frontend-react
 
-For detailed guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
+# Development server with hot reload
+npm run dev
 
-## 🔐 Authentication & Security
+# Build for production
+npm run build
 
-- **JWT-based**: 7-day expiry, HS256 signing algorithm
-- **Password Security**: bcrypt hashing (cost factor 12)
-- **SVG Sanitization**: DOMPurify whitelist (elements & attributes)
-- **SSRF Protection**: URL validation for web scraping endpoints
-- **Input Validation**: Type-safe validation via `lib/utils/validation.ts`
+# Preview production build
+npm run preview
 
-See [docs/security-design.md](docs/security-design.md) for detailed security model.
+# Run linter
+npm run lint
+```
+
+## 🌟 Features
+
+### Current Features (UI Complete)
+
+- ✅ User authentication (register, login, logout)
+- ✅ Project management (create, list, delete)
+- ✅ Project setup page (content upload UI)
+- ✅ Slide editor interface (three-column layout)
+- ✅ Template management hub
+- ✅ Layout pattern management (UI)
+- ✅ Asset library management (UI)
+
+### Planned Features
+
+- ⏳ File upload and processing (PDF, DOCX, TXT)
+- ⏳ AI content analysis and extraction
+- ⏳ Slide generation pipeline
+- ⏳ Real-time AI chat assistant
+- ⏳ Export to PPTX
+- ⏳ Template customization
+- ⏳ Collaborative editing
 
 ## 🎨 Design System
 
-**Aesthetic**: "Structured Fluidity" with Intelligence Blue as primary
+DeckGenie uses a modern, tech-minimalist design:
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| Primary Blue | `#004ac6` | CTAs, primary actions, focus states |
-| Primary Container | `#2563eb` | Gradient overlays, secondary actions |
-| Tertiary Purple | `#6a1edb` | Accents, agent status indicators |
-| Surface Gray | `#f7f9fb` | Page backgrounds, panels |
-| Font Family (Headlines) | Manrope (600/700/800) | h1, h2, h3 |
-| Font Family (Body) | Inter (400/500/600/700) | Body text, UI labels |
+- **Colors**: Blue primary (#004ac6), with purple and emerald accents
+- **Typography**: Manrope (headings) + Inter (body)
+- **Style**: Clean, bright, with subtle gradients and shadows
+- **Icons**: Material Symbols Outlined
 
-**Constraints**:
-- No drop shadows (elevation via tonal layering)
-- Glass effect surfaces (`backdrop-blur-xl`)
-- Rounded corners (22–28px)
-- No-line rule (tonal differences instead of borders)
+## 📚 API Documentation
 
-See `app/globals.css` for all design tokens and utilities.
+### Authentication Endpoints
 
-## 📊 Database Schema
+- `POST /api/v1/auth/register` - Register new user
+- `POST /api/v1/auth/login` - Login user
+- `POST /api/v1/auth/logout` - Logout user
+- `GET /api/v1/users/me` - Get current user
 
-```
-User
-├── Session[]
-├── Project[]
-│   ├── Presentation[]
-│   │   └── Slide[]
-│   │       └── ContentJson, GeneratedSvg
-│   ├── ChatMessage[]
-│   └── AgentTrace[]
-└── Template
-```
+### Project Endpoints
 
-**Key Tables**: User, Session, Project, Presentation, Slide, ChatMessage, AgentTrace, Template
+- `GET /api/v1/projects` - List projects (with pagination)
+- `GET /api/v1/projects/:id` - Get project details
+- `POST /api/v1/projects` - Create project
+- `PUT /api/v1/projects/:id` - Update project
+- `DELETE /api/v1/projects/:id` - Delete project
 
-See [docs/database-design.md](docs/database-design.md) for detailed schema.
+All authenticated endpoints require `Authorization: Bearer <token>` header.
 
-## 🚀 Deployment
+## 🔐 Security
 
-### Docker (Recommended)
+- JWT authentication (HS256, 7-day expiry)
+- bcrypt password hashing (cost=12)
+- CORS enabled for cross-origin requests
+- Input validation on all endpoints
+
+## 🚢 Deployment
+
+### Backend Deployment
 
 ```bash
-# Build and start all services
-docker compose up -d --build
-
-# Services:
-# - Next.js app (port 3000)
-# - Nginx reverse proxy (port 80/443)
-# - SQLite with Volume mount
+cd backend-go
+go build -o server cmd/server/main.go
+./server
 ```
 
-### Environment Variables
+### Frontend Deployment
 
-**Development** (`.env.local`):
+```bash
+cd frontend-react
+npm run build
+# Deploy dist/ folder to static hosting (Vercel, Netlify, etc.)
+```
+
+## 📝 Environment Variables
+
+### Backend (.env)
+
 ```env
-DATABASE_URL=file:./prisma/dev.db
-JWT_SECRET=your-32-char-secret-key
-LLM_BASE_URL=https://api.openai.com/v1
-LLM_API_KEY=sk-xxx
-LLM_MODEL=gpt-4
-LLM_TIMEOUT=60000
-LLM_MAX_CONCURRENCY=3
+PORT=8080
+JWT_SECRET=your-secret-key-here
+DATABASE_PATH=./data/ppt-agent.db
 ```
 
-**Production** (`.env.production`):
+### Frontend (.env)
+
 ```env
-DATABASE_URL=postgresql://user:pass@host:5432/dbname
-JWT_SECRET=your-production-secret
-# ... other vars
+VITE_API_BASE_URL=http://localhost:8080
 ```
-
-See [docs/deployment.md](docs/deployment.md) for full deployment guide.
-
-## 📚 Documentation
-
-| Document | Purpose |
-|----------|---------|
-| [CLAUDE.md](CLAUDE.md) | Project overview for Claude AI agents |
-| [.github/copilot-instructions.md](.github/copilot-instructions.md) | Coding patterns & AI agent guidance |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Developer onboarding & workflow |
-| [docs/ppt-agent-design.md](docs/ppt-agent-design.md) | System architecture & product design |
-| [docs/api-design.md](docs/api-design.md) | REST API specification |
-| [docs/database-design.md](docs/database-design.md) | Database schema & relationships |
-| [docs/svg-template-spec.md](docs/svg-template-spec.md) | SVG template system |
-| [docs/security-design.md](docs/security-design.md) | Security model & best practices |
-| [docs/agent-prompt-design.md](docs/agent-prompt-design.md) | AI agent implementations |
-
-## 🛣️ Roadmap
-
-### Current (Phase 1: MVP)
-- ✅ Core Next.js + TypeScript foundation
-- ✅ JWT authentication
-- ✅ Project & presentation CRUD
-- ✅ Slide editor with AI chat
-- ✅ SVG template system
-- ✅ Real-time agent progress (SSE)
-- 🚧 Agent implementations (mock → real)
-- 🚧 LLM integration (OpenAI-compatible)
-
-### Next (Phase 2: Enhancement)
-- [ ] Testing infrastructure (Jest + React Testing Library)
-- [ ] Advanced template customization
-- [ ] Batch presentation generation
-- [ ] Collaboration & sharing
-- [ ] Version history & rollback
-- [ ] Image generation integration (DALL-E, Midjourney)
-
-### Future (Phase 3: Scale)
-- [ ] Multi-language output
-- [ ] Presentation analytics
-- [ ] Team workspaces
-- [ ] Custom brand kit management
-- [ ] API for third-party integrations
 
 ## 🤝 Contributing
 
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for:
-- Setup instructions
-- Development workflow
-- Code style guidelines
-- Testing requirements
-- Deployment process
+Contributions are welcome! Please read our contributing guidelines before submitting PRs.
 
-## 📜 License
+## 📄 License
 
-MIT License — see [LICENSE](LICENSE) file for details.
-
-## 💬 Support & Community
-
-- **Issues**: Report bugs or request features on [GitHub Issues](../../issues)
-- **Documentation**: See the [docs/](docs/) folder for detailed guides
-- **Questions**: Check [CONTRIBUTING.md](CONTRIBUTING.md) troubleshooting section
+This project is licensed under the MIT License.
 
 ## 🙏 Acknowledgments
 
-- Approved interactive prototypes in `interactive-prototypes/` drive all UI architecture
-- Design system inspired by Material Design 3 + Fluent Design
-- Built with Next.js, React, and TypeScript
-- Multi-agent orchestration pattern based on ReAct (Reasoning + Acting)
+- Design inspired by modern SaaS applications
+- Built with love using Go and React
+- AI-powered features coming soon
+
+## 📞 Support
+
+For questions or issues, please open an issue on GitHub.
 
 ---
 
-**CognitiveCanvas** — *Intelligent presentations, created instantly.* ✨
-
-*Last Updated: April 2026*
+**Note**: The original Next.js full-stack implementation has been archived in `archive-nextjs/` directory. The current active codebase uses separated Go backend and React frontend.
