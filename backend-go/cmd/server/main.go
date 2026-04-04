@@ -2,43 +2,37 @@ package main
 
 import (
 	"log"
-	"os"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/yourusername/ppt-agent-backend/internal/config"
 	"github.com/yourusername/ppt-agent-backend/internal/database"
 	"github.com/yourusername/ppt-agent-backend/internal/handlers"
 	"github.com/yourusername/ppt-agent-backend/internal/middleware"
+	"github.com/yourusername/ppt-agent-backend/internal/services/llm"
 )
 
 func main() {
-	// Load environment variables
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
+	// Load configuration
+	cfg := config.Load()
 
-	databaseURL := os.Getenv("DATABASE_URL")
-	if databaseURL == "" {
-		databaseURL = "./data/ppt-agent.db"
-	}
+	// Initialize LLM service
+	llm.InitGlobalService()
 
 	// Initialize database
-	if err := database.InitDatabase(databaseURL); err != nil {
+	if err := database.InitDatabase(cfg.Database.URL); err != nil {
 		log.Fatalf("Failed to initialize database: %v", err)
 	}
 
 	// Create Gin router
 	r := gin.Default()
 
-	// CORS middleware
-	corsOrigins := os.Getenv("CORS_ORIGINS")
-	if corsOrigins == "" {
-		corsOrigins = "http://localhost:5173,http://localhost:3000"
-	}
+	// Serve static files (uploads)
+	r.Static("/uploads", "./"+cfg.Upload.UploadDir)
 
+	// CORS middleware
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:5173", "http://localhost:3000"},
+		AllowOrigins:     cfg.CORS.AllowedOrigins,
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
@@ -73,11 +67,21 @@ func main() {
 			protected.PATCH("/projects/:id", handlers.UpdateProject)
 			protected.DELETE("/projects/:id", handlers.DeleteProject)
 
+			// Layout Pattern routes
+			protected.GET("/layout-patterns", handlers.GetLayoutPatterns)
+			protected.GET("/layout-patterns/:id", handlers.GetLayoutPattern)
+			protected.POST("/layout-patterns", handlers.CreateLayoutPattern)
+			protected.PATCH("/layout-patterns/:id", handlers.UpdateLayoutPattern)
+			protected.DELETE("/layout-patterns/:id", handlers.DeleteLayoutPattern)
+			protected.POST("/layout-patterns/:id/validate", handlers.ValidateLayoutPattern)
+
+			// Upload routes
+			protected.POST("/uploads/layout-image", handlers.UploadLayoutImage)
+
 			// TODO: Add more routes
 			// - Presentations
 			// - Slides
 			// - Templates
-			// - Layout Patterns
 			// - Assets
 			// - Chat
 			// - Pipeline
@@ -85,8 +89,8 @@ func main() {
 		}
 	}
 
-	log.Printf("Server starting on port %s", port)
-	if err := r.Run(":" + port); err != nil {
+	log.Printf("Server starting on port %s", cfg.Server.Port)
+	if err := r.Run(":" + cfg.Server.Port); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
 }

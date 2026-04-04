@@ -117,8 +117,11 @@ type LayoutPattern struct {
 	ID          string         `gorm:"primaryKey;type:varchar(30)" json:"id"`
 	Name        string         `gorm:"not null" json:"name"`
 	Description *string        `gorm:"type:text" json:"description"`
+	Category    string         `gorm:"not null;index" json:"category"` // content, cover, section, conclusion
 	ImageURL    *string        `json:"imageUrl"`
 	PatternJson string         `gorm:"type:text;not null" json:"patternJson"`
+	CreatedBy   string         `gorm:"default:'ai'" json:"createdBy"` // "ai" or "manual"
+	Version     int            `gorm:"default:1" json:"version"`
 	CreatedAt   time.Time      `json:"createdAt"`
 	UpdatedAt   time.Time      `json:"updatedAt"`
 	DeletedAt   gorm.DeletedAt `gorm:"index" json:"-"`
