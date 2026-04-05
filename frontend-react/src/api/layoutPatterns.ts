@@ -14,6 +14,29 @@ export interface LayoutPattern {
   updatedAt: string;
 }
 
+export interface Parameter {
+  type: 'integer' | 'float' | 'array' | 'enum' | 'boolean';
+  default: any;
+  min?: number;
+  max?: number;
+  options?: string[];
+  description?: string;
+}
+
+export interface LayoutDSL {
+  layoutId: string;
+  name: string;
+  category: string;
+  description: string;
+  canvas: {
+    width: number;
+    height: number;
+  };
+  parameters?: Record<string, Parameter>;
+  regions: any[];
+  styles?: Record<string, any>;
+}
+
 export interface CreateLayoutPatternRequest {
   mode: 'ai' | 'manual';
   name: string;
@@ -45,6 +68,15 @@ export interface ValidationResult {
     severity: 'error' | 'warning';
   }>;
   suggestions?: string;
+}
+
+export interface InstantiateDSLRequest {
+  dslJson: string;
+  parameters: Record<string, any>;
+}
+
+export interface InstantiateDSLResponse {
+  instantiatedDsl: string;
 }
 
 export interface PaginatedResponse<T> {
@@ -118,6 +150,17 @@ export const layoutPatternsApi = {
   ): Promise<ApiResponse<ValidationResult>> => {
     const response = await apiClient.post<ApiResponse<ValidationResult>>(
       `/layout-patterns/${id}/validate`,
+      data
+    );
+    return response.data;
+  },
+
+  // Instantiate a parameterized DSL
+  instantiateDSL: async (
+    data: InstantiateDSLRequest
+  ): Promise<ApiResponse<InstantiateDSLResponse>> => {
+    const response = await apiClient.post<ApiResponse<InstantiateDSLResponse>>(
+      '/layout-patterns/instantiate',
       data
     );
     return response.data;

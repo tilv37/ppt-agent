@@ -74,6 +74,7 @@ func main() {
 			protected.PATCH("/layout-patterns/:id", handlers.UpdateLayoutPattern)
 			protected.DELETE("/layout-patterns/:id", handlers.DeleteLayoutPattern)
 			protected.POST("/layout-patterns/:id/validate", handlers.ValidateLayoutPattern)
+			protected.POST("/layout-patterns/instantiate", handlers.InstantiateDSL)
 
 			// Upload routes
 			protected.POST("/uploads/layout-image", handlers.UploadLayoutImage)

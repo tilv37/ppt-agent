@@ -4,48 +4,100 @@ import "fmt"
 
 // GetDSLGenerationSystemPrompt returns the system prompt for DSL generation
 func GetDSLGenerationSystemPrompt() string {
-	return `你是一个专业的PPT布局设计专家。根据用户提供的参考截图和描述，生成结构化的布局DSL。
+	return `你是一个专业的PPT布局设计专家。根据用户提供的参考截图和描述，生成**参数化**的布局DSL模板。
+
+⚠️ 重要：参考截图只是展示布局模式，不要固定具体数值！生成的 DSL 应该是通用模板，而非固定实例。
 
 输出要求：
 1. 严格按照JSON格式输出，不要包含任何解释文字
-2. 必须包含字段：layoutId, name, category, description, canvas, regions
-3. regions 数组定义页面区域，每个region包含：id, type, bounds
-4. bounds 使用绝对坐标，canvas默认1920x1080
-5. type支持：image, text, container, bullet-list, chart, table
-6. 对于container类型，可以包含slots数组定义子元素
+2. 必须包含字段：layoutId, name, category, description, canvas, parameters, regions
+3. **parameters 字段定义可变参数**，让 Agent 在使用时根据实际内容动态决定：
+   - 列数/行数（columnCount, rowCount）
+   - 元素数量（itemCount, maxItems）
+   - 尺寸比例（columnRatio, imageRatio）
+   - 内容类型（contentType: text/image/chart/mixed）
+4. regions 中使用 {$paramName} 引用参数值
+5. 支持 repeat 和 {i} 实现动态重复生成元素
+6. bounds 使用绝对坐标，canvas默认1920x1080
+7. type支持：image, text, container, bullet-list, chart, table
 
-示例输出：
+参数化规则：
+- 截图显示4列 → 定义 columnCount 参数（type: "integer", min: 2, max: 6, default: 4）
+- 截图显示5个要点 → 定义 maxItems 参数（type: "integer", min: 3, max: 8, default: 5）
+- 截图显示左右分栏 → 定义 columnRatio 参数（type: "array", default: [3, 7]）
+- 截图显示图片内容 → 定义 contentType 参数（type: "enum", options: ["text", "image", "mixed"], default: "image"）
+
+参数类型：
+- integer: 整数（列数、项数）
+- float: 浮点数（比例）
+- array: 数组（比例列表）
+- enum: 枚举（内容类型）
+- boolean: 布尔值（是否显示某元素）
+
+示例输出（参数化的多列布局）：
 {
-  "layoutId": "left-image-right-list",
-  "name": "左图右列表",
+  "layoutId": "multi-column-layout",
+  "name": "多列布局",
   "category": "content",
-  "description": "左侧大图，右侧标题+要点列表",
+  "description": "可变列数的多列布局，根据内容数量动态调整",
   "canvas": {"width": 1920, "height": 1080},
+  "parameters": {
+    "columnCount": {
+      "type": "integer",
+      "default": 3,
+      "min": 2,
+      "max": 6,
+      "description": "列数，由 Agent 根据内容项数量决定"
+    },
+    "itemsPerColumn": {
+      "type": "integer",
+      "default": 5,
+      "min": 3,
+      "max": 8,
+      "description": "每列的项目数"
+    },
+    "contentType": {
+      "type": "enum",
+      "default": "text",
+      "options": ["text", "image", "mixed"],
+      "description": "列内容类型"
+    }
+  },
   "regions": [
     {
-      "id": "left-image",
-      "type": "image",
-      "bounds": {"x": 60, "y": 150, "width": 850, "height": 800},
-      "constraints": {"aspectRatio": "16:9", "minWidth": 400}
+      "id": "header",
+      "type": "text",
+      "bounds": {"x": 60, "y": 60, "width": 1800, "height": 100}
     },
     {
-      "id": "right-content",
+      "id": "columns-container",
       "type": "container",
-      "bounds": {"x": 1010, "y": 150, "width": 850, "height": 800},
+      "bounds": {"x": 60, "y": 180, "width": 1800, "height": 800},
+      "layout": "grid",
+      "gridConfig": {
+        "columns": "{$columnCount}",
+        "gap": 40
+      },
       "slots": [
-        {"id": "title", "type": "text", "maxLines": 2, "fontSize": 32},
-        {"id": "bullets", "type": "bullet-list", "maxItems": 5, "fontSize": 24}
+        {
+          "id": "column-{i}",
+          "type": "{$contentType}",
+          "repeat": "{$columnCount}",
+          "constraints": {
+            "maxItems": "{$itemsPerColumn}",
+            "fontSize": 20
+          }
+        }
       ]
     }
   ],
   "styles": {
     "fontFamily": "Inter",
-    "primaryColor": "#004ac6",
-    "backgroundColor": "#ffffff"
+    "primaryColor": "#004ac6"
   }
 }
 
-请确保输出的JSON格式正确，可以直接解析。`
+请确保输出的JSON格式正确，可以直接解析。记住：生成通用模板，不要固定具体数值！`
 }
 
 // GetDSLGenerationUserPrompt returns the user prompt for DSL generation
